@@ -10,7 +10,7 @@ import uuid
 import base64
 import web
 from PIL import Image
-web.config.debug  = True
+web.config.debug = True
 import model
 import tensorflow as tf
 render = web.template.render('templates', base='base')
@@ -23,7 +23,8 @@ config = tf.ConfigProto()
 config.gpu_options.allow_growth = True                          # 程序按需申请内存
 sess = tf.Session(config=config)
 
-billList = ['通用OCR','火车票','身份证']
+billList = ['通用OCR', '火车票', '身份证']
+
 
 class OCR:
     """通用OCR识别"""
@@ -80,40 +81,35 @@ class OCR:
 
             if billModel == '' or billModel == '通用OCR':
                 result = union_rbox(result, 0.2)
-                res = [{'text':x['text'],
+                res = [{'text': x['text'],
                         'name':str(i),
-                        'box':{'cx':x['cx'],
-                               'cy':x['cy'],
-                               'w':x['w'],
-                               'h':x['h'],
-                               'angle':x['degree']
+                        'box':{'cx': x['cx'],
+                               'cy': x['cy'],
+                               'w': x['w'],
+                               'h': x['h'],
+                               'angle': x['degree']
+                               }
+                        } for i, x in enumerate(result)]
+                res = adjust_box_to_origin(img, angle, res)     # 修正box
 
-                              }
-                       } for i,x in enumerate(result)]
-                res = adjust_box_to_origin(img,angle, res)##修正box
-
-            elif billModel=='火车票':
+            elif billModel == '火车票':
                 res = trainTicket.trainTicket(result)
                 res = res.res
-                res =[ {'text':res[key],'name':key,'box':{}} for key in res]
+                res =[{'text': res[key], 'name':key, 'box':{}} for key in res]
 
-            elif billModel=='身份证':
-
+            elif billModel == '身份证':
                 res = idcard.idcard(result)
                 res = res.res
-                res =[ {'text':res[key],'name':key,'box':{}} for key in res]
-            
-        
+                res =[{'text': res[key], 'name': key, 'box':{}} for key in res]
+
         timeTake = time.time()-timeTake
-         
-        
+
         os.remove(path)
-        return json.dumps({'res':res,'timeTake':round(timeTake,4)},ensure_ascii=False)
+        return json.dumps({'res': res, 'timeTake': round(timeTake, 4)}, ensure_ascii=False)
         
 
 urls = ('/ocr', 'OCR',)
 
 if __name__ == "__main__":
-
       app = web.application(urls, globals())
       app.run()
