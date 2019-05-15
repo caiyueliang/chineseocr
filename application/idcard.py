@@ -3,6 +3,8 @@
 """
 from apphelper.image import union_rbox
 import re
+
+
 class idcard:
     """
     身份证结构化识别

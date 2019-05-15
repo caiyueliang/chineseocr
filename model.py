@@ -11,21 +11,19 @@ if ocrFlag == 'torch':
     from crnn.crnn_torch import crnnOcr as crnnOcr      # torch版本ocr
 elif ocrFlag == 'keras':
      from crnn.crnn_keras import crnnOcr as crnnOcr     # keras版本OCR
-    
-import time
-import cv2
+
 import numpy as np
 from PIL import Image
-from glob import glob
 
 from text.detector.detectors import TextDetector
 from apphelper.image import get_boxes, letterbox_image
 
-from text.opencv_dnn_detect import angle_detect         # 文字方向检测,支持dnn/tensorflow
+# 暂时用不到文本方向检测，先注释掉
+# from text.opencv_dnn_detect import angle_detect         # 文字方向检测,支持dnn/tensorflow
 from apphelper.image import estimate_skew_angle, rotate_cut_img, xy_rotate_box, sort_box, box_rotate, solve
 
 if opencvFlag == 'opencv':
-    from text import opencv_dnn_detect as detect        # opencv dnn model for darknet
+    from text import opencv_dnn_detect as detect         # opencv dnn model for darknet
 elif opencvFlag == 'darknet':
     from text import darknet_detect as detect
 else:
