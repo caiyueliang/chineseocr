@@ -74,7 +74,7 @@ class OCR:
                                                        TEXT_LINE_NMS_THRESH=0.7),        # 文本行之间测iou值
                                            leftAdjust=True,                              # 对检测的文本行进行向左延伸
                                            rightAdjust=True,                             # 对检测的文本行进行向右延伸
-                                           alph=0.01)                                    # 对检测的文本行进行向右、左延伸的倍数
+                                           alpha=0.01)                                   # 对检测的文本行进行向右、左延伸的倍数
 
             print('[POST] result', result)
             print('[POST] angle', angle)

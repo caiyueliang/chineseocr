@@ -87,9 +87,7 @@ def crnnRec(im,boxes,leftAdjust=False,rightAdjust=False,alph=0.2,f=1.0):
    return results
 
 
-
-
-def eval_angle(im,detectAngle=False):
+def eval_angle(im, detectAngle=False):
     """
     估计图片偏移角度
     @@param:im
@@ -98,19 +96,19 @@ def eval_angle(im,detectAngle=False):
     angle = 0
     img = np.array(im)
     if detectAngle:
-        angle = angle_detect(img=np.copy(img))##文字朝向检测
-        if angle==90:
+        angle = angle_detect(img=np.copy(img))                          # 文字朝向检测
+        if angle == 90:
             im = Image.fromarray(im).transpose(Image.ROTATE_90)
-        elif angle==180:
+        elif angle == 180:
             im = Image.fromarray(im).transpose(Image.ROTATE_180)
-        elif angle==270:
+        elif angle == 270:
             im = Image.fromarray(im).transpose(Image.ROTATE_270)
         img = np.array(im)
         
     return angle, img
 
 
-def model(img, detectAngle=False, config={}, leftAdjust=False, rightAdjust=False, alph=0.2):
+def model(img, detectAngle=False, config={}, leftAdjust=False, rightAdjust=False, alpha=0.2):
     """
     @@param:img,
     @@param:ifadjustDegree 调整文字识别倾斜角度
@@ -125,10 +123,10 @@ def model(img, detectAngle=False, config={}, leftAdjust=False, rightAdjust=False
         f = 1.0                                                     # 解决box在原图坐标不一致问题
     
     config['img'] = img
+
     text_recs = text_detect(**config)                               # 文字检测
     newBox = sort_box(text_recs)                                    # 行文本识别
-    result = crnnRec(np.array(img), newBox, leftAdjust, rightAdjust, alph, 1.0/f)
+
+    result = crnnRec(np.array(img), newBox, leftAdjust, rightAdjust, alpha, 1.0/f)
+
     return img, result, angle
-
-
-
