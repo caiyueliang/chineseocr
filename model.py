@@ -107,10 +107,10 @@ def eval_angle(im,detectAngle=False):
             im = Image.fromarray(im).transpose(Image.ROTATE_270)
         img = np.array(im)
         
-    return  angle,img
+    return angle, img
 
 
-def model(img,detectAngle=False,config={},leftAdjust=False,rightAdjust=False,alph=0.2):
+def model(img, detectAngle=False, config={}, leftAdjust=False, rightAdjust=False, alpha=0.2):
     """
     @@param:img,
     @@param:ifadjustDegree 调整文字识别倾斜角度
@@ -121,13 +121,13 @@ def model(img,detectAngle=False,config={},leftAdjust=False,rightAdjust=False,alp
        img,f =letterbox_image(Image.fromarray(img), IMGSIZE)## pad
        img = np.array(img)
     else:
-        f=1.0##解决box在原图坐标不一致问题
+        f = 1.0 ##解决box在原图坐标不一致问题
     
     config['img'] = img
     text_recs = text_detect(**config)##文字检测
     newBox = sort_box(text_recs)##行文本识别
-    result = crnnRec(np.array(img),newBox,leftAdjust,rightAdjust,alph,1.0/f)
-    return img,result,angle
+    result = crnnRec(np.array(img),newBox,leftAdjust,rightAdjust,alpha,1.0/f)
+    return img, result, angle
 
 
 

@@ -30,7 +30,7 @@ class OCR:
 
     def GET(self):
         post = {}
-        post['postName'] = 'ocr'##请求地址
+        post['postName'] = 'ocr'                            # 请求地址
         post['height'] = 1000
         post['H'] = 1000
         post['width'] = 600
@@ -42,9 +42,9 @@ class OCR:
     def POST(self):
         data = web.data()
         data = json.loads(data)
-        billModel = data.get('billModel','')
-        textAngle = data.get('textAngle',False)##文字检测
-        textLine = data.get('textLine',False)##只进行单行识别
+        billModel = data.get('billModel', '')
+        textAngle = data.get('textAngle', False)            # 文字检测
+        textLine = data.get('textLine', False)              # 只进行单行识别
         
         imgString = data['imgString'].encode().split(b';base64,')[-1]
         imgString = base64.b64decode(imgString)
@@ -52,34 +52,34 @@ class OCR:
         path = 'test/{}.jpg'.format(jobid)
         with open(path,'wb') as f:
             f.write(imgString)
-        img = cv2.imread(path)##GBR
+        img = cv2.imread(path)                              # GBR
         H,W = img.shape[:2]
         timeTake = time.time()
+
         if textLine:
-            ##单行识别
+            # 单行识别
             partImg = Image.fromarray(img)
             text = model.crnnOcr(partImg.convert('L'))
-            res =[ {'text':text,'name':'0','box':[0,0,W,0,W,H,0,H]} ]
+            res =[{'text': text, 'name': '0', 'box': [0, 0, W, 0, W, H, 0, H]}]
         else:
-            detectAngle = textAngle
-            _,result,angle= model.model(img,
-                                        detectAngle=detectAngle,##是否进行文字方向检测，通过web传参控制
-                                        config=dict(MAX_HORIZONTAL_GAP=50,##字符之间的最大间隔，用于文本行的合并
-                                        MIN_V_OVERLAPS=0.6,
-                                        MIN_SIZE_SIM=0.6,
-                                        TEXT_PROPOSALS_MIN_SCORE=0.1,
-                                        TEXT_PROPOSALS_NMS_THRESH=0.3,
-                                        TEXT_LINE_NMS_THRESH = 0.7,##文本行之间测iou值
-                                                ),
-                                        leftAdjust=True,##对检测的文本行进行向左延伸
-                                        rightAdjust=True,##对检测的文本行进行向右延伸
-                                        alph=0.01,##对检测的文本行进行向右、左延伸的倍数
-                                       )
+            detectAngle = textAngle                         # 是否进行文字方向检测
+            _, result, angle = model.model(img,
+                                           detectAngle=detectAngle,                     # 是否进行文字方向检测，通过web传参控制
+                                           config=dict(MAX_HORIZONTAL_GAP=50,           # 字符之间的最大间隔，用于文本行的合并
+                                                       MIN_V_OVERLAPS=0.6,
+                                                       MIN_SIZE_SIM=0.6,
+                                                       TEXT_PROPOSALS_MIN_SCORE=0.1,
+                                                       TEXT_PROPOSALS_NMS_THRESH=0.3,
+                                                       TEXT_LINE_NMS_THRESH=0.7),        # 文本行之间测iou值
+                                           leftAdjust=True,                              # 对检测的文本行进行向左延伸
+                                           rightAdjust=True,                             # 对检测的文本行进行向右延伸
+                                           alph=0.01)                                    # 对检测的文本行进行向右、左延伸的倍数
 
+            print('[POST] result', result)
+            print('[POST] angle', angle)
 
-
-            if billModel=='' or billModel=='通用OCR' :
-                result = union_rbox(result,0.2)
+            if billModel == '' or billModel == '通用OCR':
+                result = union_rbox(result, 0.2)
                 res = [{'text':x['text'],
                         'name':str(i),
                         'box':{'cx':x['cx'],
