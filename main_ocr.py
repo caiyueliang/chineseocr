@@ -90,3 +90,4 @@ def ocr_train_ticket(path, detect_angle=False):
 
 if __name__ == '__main__':
     ocr_id_card('/home/lijc08/1015929936.jpg')
+    ocr_id_card('/home/lijc08/idcard-demo.jpeg')
