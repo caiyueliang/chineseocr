@@ -12,11 +12,16 @@ import web
 from PIL import Image
 web.config.debug  = True
 import model
+import tensorflow as tf
 render = web.template.render('templates', base='base')
 from config import DETECTANGLE
 from apphelper.image import union_rbox,adjust_box_to_origin
 from application import trainTicket,idcard 
 
+config = tf.ConfigProto()
+# config.gpu_options.per_process_gpu_memory_fraction = 0.5      # 程序最多只能占用指定gpu50%的显存
+config.gpu_options.allow_growth = True                          # 程序按需申请内存
+sess = tf.Session(config=config)
 
 billList = ['通用OCR','火车票','身份证']
 
@@ -106,7 +111,7 @@ class OCR:
         return json.dumps({'res':res,'timeTake':round(timeTake,4)},ensure_ascii=False)
         
 
-urls = ('/ocr','OCR',)
+urls = ('/ocr', 'OCR',)
 
 if __name__ == "__main__":
 

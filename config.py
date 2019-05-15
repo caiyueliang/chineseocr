@@ -3,7 +3,7 @@ import os
 ########################文字检测########################
 # 文字检测引擎
 pwd = os.getcwd()
-opencvFlag = 'darknet'  # keras,opencv,darknet，模型性能 keras>darknet>opencv
+opencvFlag = 'keras'    # keras,opencv,darknet，模型性能 keras>darknet>opencv
 IMGSIZE = (608, 608)    # yolo3 输入图像尺寸
 
 # keras 版本anchors

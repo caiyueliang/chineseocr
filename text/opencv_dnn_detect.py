@@ -5,8 +5,9 @@ from PIL import Image
 import numpy as np
 import cv2
 
-if opencvFlag=='keras':
-    ##转换为tf模型，以便GPU调用
+
+if opencvFlag == 'keras':
+    # 转换为tf模型，以便GPU调用
     import tensorflow as tf
     from tensorflow.python.platform import gfile
     config = tf.ConfigProto(allow_soft_placement=True)
@@ -16,19 +17,20 @@ if opencvFlag=='keras':
             graph_def.ParseFromString(f.read())
             sess.graph.as_default()
             tf.import_graph_def(graph_def, name='')
-    inputImg =  sess.graph.get_tensor_by_name('input_1:0')
+    inputImg = sess.graph.get_tensor_by_name('input_1:0')
     predictions = sess.graph.get_tensor_by_name('predictions/Softmax:0')
     keep_prob = tf.placeholder(tf.float32)
-
-    
 else:
-   angleNet = cv2.dnn.readNetFromTensorflow(AngleModelPb,AngleModelPbtxt)##dnn 文字方向检测
-textNet  = cv2.dnn.readNetFromDarknet(yoloCfg,yoloWeights)##文字定位
+    angleNet = cv2.dnn.readNetFromTensorflow(AngleModelPb, AngleModelPbtxt)     # dnn 文字方向检测
+
+textNet = cv2.dnn.readNetFromDarknet(yoloCfg, yoloWeights)                      # 文字定位
+
+
 def text_detect(img):
     thresh=0
     h,w = img.shape[:2]
     
-    inputBlob = cv2.dnn.blobFromImage(img, scalefactor=0.00390625, size=IMGSIZE,swapRB=True ,crop=False);
+    inputBlob = cv2.dnn.blobFromImage(img, scalefactor=0.00390625, size=IMGSIZE,swapRB=True ,crop=False)
     textNet.setInput(inputBlob)
     pred = textNet.forward()
     cx = pred[:,0]*w
