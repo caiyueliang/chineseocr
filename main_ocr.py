@@ -27,8 +27,8 @@ def ocr_id_card(path, detect_angle=False):
                                    rightAdjust=True,                            # 对检测的文本行进行向右延伸
                                    alpha=0.01)                                  # 对检测的文本行进行向右、左延伸的倍数
 
-    print('[ocr_id_card] result', result)
-    print('[ocr_id_card] angle', angle)
+    # print('[ocr_id_card] result', result)
+    # print('[ocr_id_card] angle', angle)
 
     res = idcard.idcard(result)
     res = res.res
@@ -76,8 +76,8 @@ def ocr_train_ticket(path, detect_angle=False):
                                    rightAdjust=True,                            # 对检测的文本行进行向右延伸
                                    alpha=0.01)                                  # 对检测的文本行进行向右、左延伸的倍数
 
-    print('[ocr_train_ticket] result', result)
-    print('[ocr_train_ticket] angle', angle)
+    # print('[ocr_train_ticket] result', result)
+    # print('[ocr_train_ticket] angle', angle)
 
     res = trainTicket.trainTicket(result)
     res = res.res
