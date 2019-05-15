@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-from config import opencvFlag,GPU,IMGSIZE,ocrFlag
+from config import opencvFlag, GPU, IMGSIZE, ocrFlag
 if not GPU:
     import os
     os.environ["CUDA_VISIBLE_DEVICES"]=''##不启用GPU
     
-if ocrFlag=='torch':
+if ocrFlag == 'torch':
     from crnn.crnn_torch import crnnOcr as crnnOcr ##torch版本ocr
-elif ocrFlag=='keras':
+elif ocrFlag == 'keras':
      from crnn.crnn_keras import crnnOcr as crnnOcr ##keras版本OCR
     
 import time

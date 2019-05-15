@@ -1,16 +1,18 @@
 import os
+
 ########################文字检测########################
-##文字检测引擎 
+# 文字检测引擎
 pwd = os.getcwd()
-opencvFlag = 'keras' ##keras,opencv,darknet，模型性能 keras>darknet>opencv
-IMGSIZE = (608,608)## yolo3 输入图像尺寸
-## keras 版本anchors
+opencvFlag = 'keras'    # keras,opencv,darknet，模型性能 keras>darknet>opencv
+IMGSIZE = (608, 608)    # yolo3 输入图像尺寸
+
+# keras 版本anchors
 keras_anchors = '8,11, 8,16, 8,23, 8,33, 8,48, 8,97, 8,139, 8,198, 8,283'
-class_names = ['none','text',]
-kerasTextModel=os.path.join(pwd,"models","text.h5")##keras版本模型权重文件
+class_names = ['none', 'text']
+kerasTextModel = os.path.join(pwd, "models", "text.h5")     # keras版本模型权重文件
 
 ############## darknet yolo  ##############
-darknetRoot = os.path.join(os.path.curdir,"darknet")## yolo 安装目录
+darknetRoot = os.path.join(os.path.curdir,"darknet")        # yolo 安装目录
 yoloCfg     = os.path.join(pwd,"models","text.cfg")
 yoloWeights = os.path.join(pwd,"models","text.weights")
 yoloData    = os.path.join(pwd,"models","text.data")
