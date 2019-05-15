@@ -3,7 +3,7 @@ import os
 ########################文字检测########################
 # 文字检测引擎
 pwd = os.getcwd()
-opencvFlag = 'keras'    # keras,opencv,darknet，模型性能 keras>darknet>opencv
+opencvFlag = 'darknet'  # keras,opencv,darknet，模型性能 keras>darknet>opencv
 IMGSIZE = (608, 608)    # yolo3 输入图像尺寸
 
 # keras 版本anchors
@@ -20,17 +20,17 @@ yoloData    = os.path.join(pwd,"models","text.data")
 
 ########################文字检测########################
 
-## GPU选择及启动GPU序号
-GPU = True##OCR 是否启用GPU
-GPUID=0##调用GPU序号
 
-## nms选择,支持cython,gpu,python
-nmsFlag='gpu'## cython/gpu/python ##容错性 优先启动GPU，其次是cpython 最后是python
+# GPU选择及启动GPU序号
+GPU = True                  # OCR 是否启用GPU
+GPUID = 0                   # 调用GPU序号
+
+# nms选择,支持cython,gpu,python
+nmsFlag = 'gpu'             # cython/gpu/python ##容错性 优先启动GPU，其次是cpython 最后是python
 if not GPU:
     nmsFlag='cython'
 
-
-##vgg文字方向检测模型
+# vgg文字方向检测模型
 DETECTANGLE=True##是否进行文字方向检测
 AngleModelPb = os.path.join(pwd,"models","Angle-model.pb")
 AngleModelPbtxt = os.path.join(pwd,"models","Angle-model.pbtxt")

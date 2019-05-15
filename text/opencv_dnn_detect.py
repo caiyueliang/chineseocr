@@ -99,7 +99,7 @@ def angle_detect(img,adjust=True):
     """
     文字方向检测
     """
-    if opencvFlag=='keras':
-        return angle_detect_tf(img,adjust=adjust)
+    if opencvFlag == 'keras':
+        return angle_detect_tf(img, adjust=adjust)
     else:
-        return angle_detect_dnn(img,adjust=adjust)
+        return angle_detect_dnn(img, adjust=adjust)
