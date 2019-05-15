@@ -110,7 +110,7 @@ def eval_angle(im,detectAngle=False):
     return angle, img
 
 
-def model(img, detectAngle=False, config={}, leftAdjust=False, rightAdjust=False, alpha=0.2):
+def model(img, detectAngle=False, config={}, leftAdjust=False, rightAdjust=False, alph=0.2):
     """
     @@param:img,
     @@param:ifadjustDegree 调整文字识别倾斜角度
@@ -126,7 +126,7 @@ def model(img, detectAngle=False, config={}, leftAdjust=False, rightAdjust=False
     config['img'] = img
     text_recs = text_detect(**config)##文字检测
     newBox = sort_box(text_recs)##行文本识别
-    result = crnnRec(np.array(img),newBox,leftAdjust,rightAdjust,alpha,1.0/f)
+    result = crnnRec(np.array(img),newBox,leftAdjust,rightAdjust,alph,1.0/f)
     return img, result, angle
 
 
