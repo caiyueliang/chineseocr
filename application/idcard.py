@@ -104,7 +104,8 @@ class idcard:
             txt = txt.replace(' ','')
             
             ##身份证地址
-            if '住址' in txt or '省' in txt or '市' in txt or '县' in txt or '街' in txt or '村' in txt or "镇" in txt or "区" in txt or "城" in txt:
+            if '住址' in txt or '省' in txt or '市' in txt or '县' in txt or '街' in txt or '村' in txt \
+                    or "镇" in txt or "区" in txt or "城" in txt or "路" in txt:
                 addString.append(txt.replace('住址',''))
             
         if len(addString)>0:
