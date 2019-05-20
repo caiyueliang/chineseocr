@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding:utf-8
 import numpy as np
 from config import GPUID,GPU,nmsFlag
 from text.detector.utils.python_nms import nms as python_nms ##python版本nms
@@ -12,11 +12,11 @@ if nmsFlag=='gpu' and GPU and GPUID is not None:
     try:
         from text.detector.utils.gpu_nms import gpu_nms
     except:
-            gpu_nms = None
+        gpu_nms = None
     cython_nms = None
 
 elif nmsFlag=='python':
-     gpu_nms ==None
+     gpu_nms = None
      cython_nms = None
 
 elif nmsFlag=='cython':
@@ -29,7 +29,7 @@ else:
     gpu_nms =None
     cython_nms = None
 
-print("Nms engine gpu_nms:",gpu_nms,",cython_nms:",cython_nms,",python_nms:",python_nms)
+print("Nms engine gpu_nms:", gpu_nms, ",cython_nms:", cython_nms, ",python_nms:", python_nms)
 
 
 def nms(dets, thresh):
