@@ -110,18 +110,47 @@ def model(img, detectAngle=False, config={}, leftAdjust=False, rightAdjust=False
     @@param:ifadjustDegree 调整文字识别倾斜角度
     @@param:detectAngle,是否检测文字朝向
     """
-    angle, img = eval_angle(img, detectAngle=detectAngle)           # 进行文字方向检测
+    angle, img = eval_angle(img, detectAngle=detectAngle)  # 进行文字方向检测
 
     if opencvFlag != 'keras':
-       img, f = letterbox_image(Image.fromarray(img), IMGSIZE)      # pad
-       img = np.array(img)
+        img, f = letterbox_image(Image.fromarray(img), IMGSIZE)  # pad
+        img = np.array(img)
     else:
-        f = 1.0                                                     # 解决box在原图坐标不一致问题
-    
+        f = 1.0  # 解决box在原图坐标不一致问题
+
     config['img'] = img
 
-    text_recs = text_detect(**config)                                               # 文字检测
-    newBox = sort_box(text_recs)                                                    # 行文本识别
-    result = crnnRec(np.array(img), newBox, leftAdjust, rightAdjust, alpha, 1.0/f)  # ocr识别
+    text_recs = text_detect(**config)  # 文字检测
+    print('text_recs', text_recs)
+    newBox = sort_box(text_recs)  # 行文本识别
+    print('newBox', newBox)
+    result = crnnRec(np.array(img), newBox, leftAdjust, rightAdjust, alpha, 1.0 / f)  # ocr识别
+    print('result', result)
 
     return img, result, angle
+
+
+# def model(img, detectAngle=False, config={}, leftAdjust=False, rightAdjust=False, alpha=0.2):
+#     """
+#     @@param:img,
+#     @@param:ifadjustDegree 调整文字识别倾斜角度
+#     @@param:detectAngle,是否检测文字朝向
+#     """
+#     angle, img = eval_angle(img, detectAngle=detectAngle)           # 进行文字方向检测
+#
+#     if opencvFlag != 'keras':
+#        img, f = letterbox_image(Image.fromarray(img), IMGSIZE)      # pad
+#        img = np.array(img)
+#     else:
+#         f = 1.0                                                     # 解决box在原图坐标不一致问题
+#
+#     config['img'] = img
+#
+#     text_recs = text_detect(**config)                                               # 文字检测
+#     print('text_recs', text_recs)
+#     newBox = sort_box(text_recs)                                                    # 行文本识别
+#     print('newBox', newBox)
+#     result = crnnRec(np.array(img), newBox, leftAdjust, rightAdjust, alpha, 1.0/f)  # ocr识别
+#     print('result', result)
+#
+#     return img, result, angle

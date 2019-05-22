@@ -100,8 +100,8 @@ def ocr_train_ticket(path, detect_angle=False):
 
 if __name__ == '__main__':
     ocr_id_card('/home/lijc08/id_card_img.jpg')
-    ocr_id_card('/home/lijc08/idcard-demo.jpeg')
-    ocr_id_card('/home/lijc08/1015929936.jpg')
-    ocr_id_card('/home/lijc08/1316042384.jpg')
-    ocr_id_card('/home/lijc08/webwxgetmsgimg.jpeg')
+    # ocr_id_card('/home/lijc08/idcard-demo.jpeg')
+    # ocr_id_card('/home/lijc08/1015929936.jpg')
+    # ocr_id_card('/home/lijc08/1316042384.jpg')
+    # ocr_id_card('/home/lijc08/webwxgetmsgimg.jpeg')
 

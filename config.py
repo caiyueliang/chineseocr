@@ -3,7 +3,8 @@ import os
 ########################文字检测########################
 # 文字检测引擎
 pwd = os.getcwd()
-opencvFlag = 'keras'    # keras,opencv,darknet，模型性能 keras>darknet>opencv
+# opencvFlag = 'keras'    # keras,opencv,darknet，模型性能 keras>darknet>opencv
+opencvFlag = 'opencv'    # keras,opencv,darknet，模型性能 keras>darknet>opencv
 IMGSIZE = (608, 608)    # yolo3 输入图像尺寸
 
 # keras 版本anchors
@@ -22,7 +23,7 @@ yoloData    = os.path.join(pwd,"models","text.data")
 
 
 # GPU选择及启动GPU序号
-GPU = True                  # OCR 是否启用GPU
+GPU = False                 # OCR 是否启用GPU
 GPUID = 0                   # 调用GPU序号
 
 # nms选择,支持cython,gpu,python
