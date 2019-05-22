@@ -16,6 +16,7 @@ def ocr_id_card(path, detect_angle=False):
     time_take = time.time()
 
     _, result, angle = model.model(img,
+                                   path.split('/')[-1],
                                    detectAngle=detect_angle,                    # 是否进行文字方向检测，通过web传参控制
                                    config=dict(MAX_HORIZONTAL_GAP=50,           # 字符之间的最大间隔，用于文本行的合并
                                                MIN_V_OVERLAPS=0.6,
@@ -99,9 +100,9 @@ def ocr_train_ticket(path, detect_angle=False):
 
 
 if __name__ == '__main__':
-    ocr_id_card('/home/lijc08/id_card_img.jpg')
-    ocr_id_card('/home/lijc08/idcard-demo.jpeg')
-    ocr_id_card('/home/lijc08/1015929936.jpg')
-    ocr_id_card('/home/lijc08/1316042384.jpg')
-    ocr_id_card('/home/lijc08/webwxgetmsgimg.jpeg')
+    ocr_id_card('./images/id_card_img.jpg')
+    ocr_id_card('./images/idcard-demo.jpeg')
+    ocr_id_card('./images/1015929936.jpg')
+    ocr_id_card('./images/1316042384.jpg')
+    ocr_id_card('./images/webwxgetmsgimg.jpeg')
 

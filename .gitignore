@@ -15,3 +15,5 @@ buil
 __pycache__
 darknet 
 .idea/
+images/
+output/
