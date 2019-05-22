@@ -32,6 +32,9 @@ else:
 
 print("Text detect engine:{}".format(opencvFlag))
 
+import copy
+import cv2
+
 
 # 文字检测
 def text_detect(img,
@@ -104,7 +107,19 @@ def eval_angle(im, detectAngle=False):
     return angle, img
 
 
+def draw_boxes(image, text_recs, name, color):
+    for text_rec in text_recs:
+        pts = np.array([[text_rec[0], text_rec[1]], [text_rec[2], text_rec[3]],
+                        [text_rec[4], text_rec[5]], [text_rec[6], text_rec[7]]], np.int32)
+        pts = pts.reshape((-1, 1, 2))
+        cv2.polylines(image, [pts], True, color)
+    cv2.imshow(name, image)
+    cv2.waitKey(0)
+
+
 def model(img, detectAngle=False, config={}, leftAdjust=False, rightAdjust=False, alpha=0.2):
+    image_cv = copy.copy(img)
+
     """
     @@param:img,
     @@param:ifadjustDegree 调整文字识别倾斜角度
@@ -120,10 +135,14 @@ def model(img, detectAngle=False, config={}, leftAdjust=False, rightAdjust=False
 
     config['img'] = img
 
-    text_recs = text_detect(**config)  # 文字检测
-    print('text_recs', text_recs)
-    newBox = sort_box(text_recs)  # 行文本识别
+    text_recs = text_detect(**config)                           # 文字检测
+    # print('text_recs', text_recs)
+    # draw_boxes(image_cv, text_recs, "text_recs", (255, 255, 0))
+
+    newBox = sort_box(text_recs)                                # 文本进行排序（从上到下进行排序）
     print('newBox', newBox)
+    draw_boxes(image_cv, text_recs, "new_box", (255, 0, 0))
+
     result = crnnRec(np.array(img), newBox, leftAdjust, rightAdjust, alpha, 1.0 / f)  # ocr识别
     print('result', result)
 
