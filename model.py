@@ -118,8 +118,6 @@ def draw_boxes(image, text_recs, name, color):
 
 
 def model(img, detectAngle=False, config={}, leftAdjust=False, rightAdjust=False, alpha=0.2):
-    image_cv = copy.copy(img)
-
     """
     @@param:img,
     @@param:ifadjustDegree 调整文字识别倾斜角度
@@ -134,6 +132,7 @@ def model(img, detectAngle=False, config={}, leftAdjust=False, rightAdjust=False
         f = 1.0  # 解决box在原图坐标不一致问题
 
     config['img'] = img
+    image_cv = copy.copy(img)
 
     text_recs = text_detect(**config)                           # 文字检测
     # print('text_recs', text_recs)
