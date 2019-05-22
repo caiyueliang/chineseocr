@@ -376,32 +376,30 @@ def xy_rotate_box(cx,cy,w,h,angle):
     x4,y4 = rotate(cx-w/2,cy+h/2,angle,cx,cy)
     return x1,y1,x2,y2,x3,y3,x4,y4
 
-                                
-                                
-def rotate_cut_img(im,degree,box,w,h,leftAdjust=False,rightAdjust=False,alph=0.2):
-    x1,y1,x2,y2,x3,y3,x4,y4 = box[:8]
-    x_center,y_center = np.mean([x1,x2,x3,x4]),np.mean([y1,y2,y3,y4])
-    degree_ = degree*180.0/np.pi
+
+def rotate_cut_img(im, degree, box, w, h, leftAdjust=False, rightAdjust=False, alph=0.2):
+    x1, y1, x2, y2, x3, y3, x4, y4 = box[:8]
+    x_center, y_center = np.mean([x1, x2, x3, x4]), np.mean([y1, y2, y3, y4])
+    degree_ = degree*180.0 / np.pi
     right = 0
-    left  = 0
+    left = 0
     if rightAdjust:
         right = 1
     if leftAdjust:
-        left  = 1
+        left = 1
     
-    box = (max(1,x_center-w/2-left*alph*(w/2))##xmin
-           ,y_center-h/2,##ymin
-           min(x_center+w/2+right*alph*(w/2),im.size[0]-1)##xmax
-           ,y_center+h/2)##ymax
+    box = (max(1, x_center-w/2-left*alph*(w/2)),                # xmin
+           y_center-h/2,                                        # ymin
+           min(x_center+w/2+right*alph*(w/2), im.size[0]-1),    # xmax
+           y_center+h/2)                                        # ymax
  
     newW = box[2]-box[0]
     newH = box[3]-box[1]
-    tmpImg = im.rotate(degree_,center=(x_center,y_center)).crop(box)
-    return tmpImg,newW,newH
+    tmpImg = im.rotate(degree_, center=(x_center, y_center)).crop(box)
+    return tmpImg, newW, newH
 
 
-
-def letterbox_image(image, size,fillValue=[128,128,128]):
+def letterbox_image(image, size, fillValue=[128, 128, 128]):
     '''resize image with unchanged aspect ratio using padding'''
     image_w, image_h = image.size
     w, h = size
