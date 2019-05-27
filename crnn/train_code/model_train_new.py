@@ -7,14 +7,14 @@ from torch.autograd import Variable
 from torchvision import transforms as T
 from warpctc_pytorch import CTCLoss
 import os
-import utils
-import my_dataset
-from keys import alphabet
+import crnn.utils as utils
+import crnn.my_dataset as my_dataset
 import time
 
 
 class ModuleTrain:
-    def __init__(self, train_path, test_path, model_file, model, img_h=32, img_w=110, batch_size=64, lr=1e-3,
+    def __init__(self, train_path, test_path, model_file, model, alphabet,
+                 img_h=32, img_w=110, batch_size=64, lr=1e-3,
                  use_unicode=True, best_loss=0.2, use_gpu=True, workers=1):
         self.model = model
         self.model_file = model_file

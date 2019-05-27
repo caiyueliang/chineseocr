@@ -59,7 +59,7 @@ if __name__ == '__main__':
     out_put_model_file = os.path.join(opt.out_put, 'crnn.pth')
 
     model_train = new_mt.ModuleTrain(train_path=opt.train_root, test_path=opt.val_root,
-                                     model_file=out_put_model_file, model=model,
+                                     model_file=out_put_model_file, model=model, alphabet=opt.alphabet,
                                      img_h=opt.img_h, img_w=opt.img_w, batch_size=opt.batch_size, lr=opt.lr)
 
     model_train.train(200, 60)
