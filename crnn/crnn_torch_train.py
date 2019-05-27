@@ -19,7 +19,7 @@ def parse_argvs():
     # parser.add_argument('--imgH', type=int, default=32, help='the height of the input image to network')
     # parser.add_argument('--imgW', type=int, default=256, help='the width of the input image to network')
     parser.add_argument('--img_h', type=int, default=32, help='the height of the input image to network')
-    parser.add_argument('--img_w', type=int, default=110, help='the width of the input image to network')
+    parser.add_argument('--img_w', type=int, default=277, help='the width of the input image to network')
     parser.add_argument('--nh', type=int, default=256, help='size of the lstm hidden state')
     parser.add_argument('--niter', type=int, default=100, help='number of epochs to train for')
     parser.add_argument('--lr', type=float, default=0.001, help='learning rate for Critic, default=0.001')
@@ -55,14 +55,12 @@ if __name__ == '__main__':
     print("[nclass] ", nclass)
     nc = int(opt.n_channels)
 
-    img_w = 110
-    img_h = 32
-    model = crnn.CRNN(imgH=img_h, nc=nc, nclass=nclass, nh=nh)
+    model = crnn.CRNN(imgH=opt.img_h, nc=nc, nclass=nclass, nh=nh)
     out_put_model_file = os.path.join(opt.out_put, 'crnn.pth')
 
     model_train = new_mt.ModuleTrain(train_path=opt.train_root, test_path=opt.val_root,
                                      model_file=out_put_model_file, model=model,
-                                     img_h=img_h, img_w=img_w, batch_size=opt.batch_size, lr=opt.lr)
+                                     img_h=opt.img_h, img_w=opt.img_w, batch_size=opt.batch_size, lr=opt.lr)
 
     model_train.train(200, 60)
     model_train.test()
