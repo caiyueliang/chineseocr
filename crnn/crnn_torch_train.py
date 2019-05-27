@@ -9,9 +9,8 @@ from crnn.train_code import model_train_new as new_mt
 
 def parse_argvs():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_root', help='path to dataset', default='../../Data/car_recognition/train')
-    # parser.add_argument('--val_root', help='path to dataset', default='../../Data/car_recognition/test')
-    parser.add_argument('--val_root', help='path to dataset', default='../../Data/car_recognition/train')
+    parser.add_argument('--train_root', help='path to dataset', default='../../Data/OCR/train')
+    parser.add_argument('--val_root', help='path to dataset', default='../../Data/OCR/test')
     parser.add_argument('--model', help='model to train', default='CRNN')
 
     parser.add_argument('--workers', type=int, help='number of data loading workers', default=1)

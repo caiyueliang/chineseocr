@@ -58,9 +58,9 @@ class MyDataset(Dataset):
         if self.target_transform is not None:
             label = self.target_transform(label)
 
-        # print(img)
-        # print(img.size())
-        # print(label)
+        print(img)
+        print(img.size())
+        print(label)
         return (img, label)
 
     # 随机高斯模糊(PIL)
