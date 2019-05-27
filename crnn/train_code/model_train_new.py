@@ -8,7 +8,7 @@ from torchvision import transforms as T
 from warpctc_pytorch import CTCLoss
 import os
 import crnn.utils as utils
-import crnn.my_dataset as my_dataset
+import crnn.train_code.my_dataset as my_dataset
 import time
 
 
@@ -50,13 +50,13 @@ class ModuleTrain:
             # T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
         ])
 
-        train_label = os.path.join(train_path, 'labels_normal.txt')
-        train_dataset = my_dataset.MyDataset(root=train_path, label_file=train_label, transform=self.transform,
+        # train_label = os.path.join(train_path, 'labels_normal.txt')
+        train_dataset = my_dataset.MyDataset(root=train_path, transform=self.transform,
                                              is_train=True, img_h=self.img_h, img_w=self.img_w)
         self.train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=self.batch_size,
                                                         shuffle=True, num_workers=int(self.workers))
-        test_label = os.path.join(test_path, 'labels_normal.txt')
-        test_dataset = my_dataset.MyDataset(root=test_path, label_file=test_label, transform=self.transform,
+        # test_label = os.path.join(test_path, 'labels_normal.txt')
+        test_dataset = my_dataset.MyDataset(root=test_path, transform=self.transform,
                                             is_train=False, img_h=self.img_h, img_w=self.img_w)
         self.test_loader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=self.batch_size,
                                                        shuffle=False, num_workers=int(self.workers))

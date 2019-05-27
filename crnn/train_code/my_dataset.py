@@ -16,20 +16,21 @@ import cv2
 
 
 class MyDataset(Dataset):
-    def __init__(self, root=None, label_file=None, transform=None, target_transform=None, is_train=False, img_h=110, img_w=32):
+    def __init__(self, root=None, transform=None, target_transform=None, is_train=False, img_h=110, img_w=32):
         self.root = root
-        self.label_file = label_file
         self.sample_list = list()
         self.is_train = is_train
         self.img_h = img_h
         self.img_w = img_w
 
-        with open(self.label_file, 'r') as f:
-            self.sample_list = f.readlines()
+        for root, dirs, files in os.walk(self.root):
+            self.sample_list.append(os.path.join(root, files))
+        # with open(self.label_file, 'r') as f:
+        #     self.sample_list = f.readlines()
 
         self.nSamples = len(self.sample_list)
-        # print(self.sample_list)
-        print('label_file: %s samples len: %d' % (self.label_file, self.nSamples))
+        print(self.sample_list)
+        print('label_file: root: %s samples len: %d' % (self.root, self.nSamples))
 
         self.transform = transform
         self.target_transform = target_transform
