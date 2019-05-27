@@ -2,9 +2,9 @@
 from __future__ import print_function
 import os
 import argparse
-from crnn.keys import alphabetChinese_1
-import crnn.network_torch as crnn
-from crnn.train_code import model_train_new as new_mt
+from keys import alphabetChinese_1
+import network_torch as crnn
+from train_code import model_train_new as new_mt
 
 
 def parse_argvs():
