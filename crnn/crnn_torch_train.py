@@ -2,15 +2,15 @@
 from __future__ import print_function
 import os
 import argparse
-from keys import alphabetChinese_1
+from keys import alphabetChinese_100
 import network_torch as crnn
 from train_code import model_train_new as new_mt
 
 
 def parse_argvs():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_root', help='path to dataset', default='../../Data/OCR/train')
-    parser.add_argument('--val_root', help='path to dataset', default='../../Data/OCR/test')
+    parser.add_argument('--train_root', help='path to dataset', default='../../Data/OCR_100/train')
+    parser.add_argument('--val_root', help='path to dataset', default='../../Data/OCR_100/test')
     parser.add_argument('--model', help='model to train', default='CRNN')
 
     parser.add_argument('--workers', type=int, help='number of data loading workers', default=1)
@@ -21,7 +21,7 @@ def parse_argvs():
     parser.add_argument('--img_w', type=int, default=277, help='the width of the input image to network')
     parser.add_argument('--nh', type=int, default=256, help='size of the lstm hidden state')
     parser.add_argument('--niter', type=int, default=100, help='number of epochs to train for')
-    parser.add_argument('--lr', type=float, default=0.001, help='learning rate for Critic, default=0.001')
+    parser.add_argument('--lr', type=float, default=0.0001, help='learning rate for Critic, default=0.001')
     parser.add_argument('--beta1', type=float, default=0.5, help='beta1 for adam. default=0.5')
     parser.add_argument('--cuda', action='store_true', help='enables cuda')
     parser.add_argument('--ngpu', type=int, default=1, help='number of GPUs to use')
@@ -29,7 +29,7 @@ def parse_argvs():
 
     # parser.add_argument('--crnn', help="path to crnn (to continue training)", default='./save_model/netCRNN.pth')
     # parser.add_argument('--crnn', help="path to crnn (to continue training)", default='')
-    parser.add_argument('--alphabet', default=alphabetChinese_1)
+    parser.add_argument('--alphabet', default=alphabetChinese_100)
     parser.add_argument('--out_put', help='Where to store samples and models', default='./checkpoints')
     parser.add_argument('--use_unicode', type=bool, help='use_unicode', default=True)
     parser.add_argument('--displayInterval', type=int, default=100, help='Interval to be displayed')
