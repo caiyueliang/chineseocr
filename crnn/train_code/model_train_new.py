@@ -81,6 +81,7 @@ class ModuleTrain:
 
         print('[train] epoch: %d' % epoch)
         for epoch_i in range(epoch):
+            start_time = time.time()
             train_loss = 0.0
             correct = 0
 
@@ -151,7 +152,8 @@ class ModuleTrain:
 
             train_loss /= len(self.train_loader)
             acc = float(correct) / float(len(self.train_loader.dataset))
-            print('[Train] Epoch: {} \tLoss: {:.6f}\tAcc: {:.6f}\tlr: {}'.format(epoch_i, train_loss, acc, self.lr))
+            use_time = time.time() - start_time
+            print('[Train] Epoch: {} \tLoss: {:.6f}\tAcc: {:.6f}\tlr: {}\ttime: {}'.format(epoch_i, train_loss, acc, self.lr, use_time))
 
             # Test
             test_loss, test_acc = self.test()
@@ -204,7 +206,8 @@ class ModuleTrain:
             batch_size = cpu_images.size(0)
             utils.loadData(image, cpu_images)
             if self.use_unicode:
-                cpu_texts = [tx.decode('utf-8') for tx in cpu_texts]
+                # cpu_texts = [tx.decode('utf-8') for tx in cpu_texts]
+                cpu_texts = [tx for tx in cpu_texts]
 
             t, l = self.converter.encode(cpu_texts)
             utils.loadData(text, t)
