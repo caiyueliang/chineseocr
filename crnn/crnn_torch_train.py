@@ -55,7 +55,7 @@ if __name__ == '__main__':
     nc = int(opt.n_channels)
 
     model = crnn.CRNN(imgH=opt.img_h, nc=nc, nclass=nclass, nh=nh)
-    out_put_model_file = os.path.join(opt.out_put, 'crnn.pth')
+    out_put_model_file = os.path.join(opt.out_put, 'crnn_best.pth')
 
     model_train = new_mt.ModuleTrain(train_path=opt.train_root, test_path=opt.val_root,
                                      model_file=out_put_model_file, model=model, alphabet=opt.alphabet,
