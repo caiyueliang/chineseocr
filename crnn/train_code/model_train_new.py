@@ -75,6 +75,9 @@ class ModuleTrain:
         in_features = self.model.rnn[1].embedding.in_features                       # 提取fc层中固定的输入参数
         self.model.rnn[1].embedding = torch.nn.Linear(in_features, num_class_new)   # 修改类别为num_classes
         print(self.model)
+        if self.use_gpu:
+            print("[use gpu] ...")
+            self.model = self.model.cuda()
         # self.save_model_file = new_model_file
 
         # self.optimizer = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.9, weight_decay=1e-5)
