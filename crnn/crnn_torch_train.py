@@ -2,7 +2,7 @@
 from __future__ import print_function
 import os
 import argparse
-from keys import alphabetChinese_100
+from keys import alphabetChinese_500
 import network_torch as crnn
 from train_code import model_train_new as new_mt
 
@@ -32,7 +32,7 @@ def parse_argvs():
 
     # parser.add_argument('--crnn', help="path to crnn (to continue training)", default='./save_model/netCRNN.pth')
     # parser.add_argument('--crnn', help="path to crnn (to continue training)", default='')
-    parser.add_argument('--alphabet', default=alphabetChinese_100)
+    parser.add_argument('--alphabet', default=alphabetChinese_500)
     parser.add_argument('--out_put', help='Where to store samples and models', default='./checkpoints')
     parser.add_argument('--use_unicode', type=bool, help='use_unicode', default=True)
     parser.add_argument('--displayInterval', type=int, default=100, help='Interval to be displayed')
@@ -56,7 +56,7 @@ if __name__ == '__main__':
     num_class_old = opt.old_class_num + 1
     num_class_new = opt.new_class_num + 1
     print("[num_class_old] ", num_class_old)
-    print("[num_class_new] ", num_class_old)
+    print("[num_class_new] ", num_class_new)
 
     nc = int(opt.n_channels)
 
