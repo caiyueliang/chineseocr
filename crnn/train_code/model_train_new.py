@@ -15,7 +15,7 @@ import time
 class ModuleTrain:
     def __init__(self, train_path, test_path, model_file, model, alphabet,
                  img_h=32, img_w=110, batch_size=64, lr=1e-3,
-                 use_unicode=True, best_loss=5, use_gpu=True, workers=1):
+                 use_unicode=True, best_loss=10, use_gpu=True, workers=1):
         self.model = model
         self.model_file = model_file
         self.use_unicode = use_unicode
@@ -69,7 +69,8 @@ class ModuleTrain:
         #     self.optimizer = optim.Adadelta(crnn.parameters(), lr=opt.lr)
         # else:
         #     self.optimizer = optim.RMSprop(crnn.parameters(), lr=opt.lr)
-        self.optimizer = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=1e-5)
+        # self.optimizer = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=1e-5)
+        self.optimizer = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.9, weight_decay=1e-5)
 
     def train(self, epoch, decay_epoch=80):
         image = torch.FloatTensor(self.batch_size, 3, self.img_h, self.img_w)
