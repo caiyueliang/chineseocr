@@ -21,7 +21,7 @@ def parse_argvs():
     parser.add_argument('--img_w', type=int, default=277, help='the width of the input image to network')
     parser.add_argument('--nh', type=int, default=256, help='size of the lstm hidden state')
     parser.add_argument('--niter', type=int, default=100, help='number of epochs to train for')
-    parser.add_argument('--lr', type=float, default=0.001, help='learning rate for Critic, default=0.001')
+    parser.add_argument('--lr', type=float, default=0.0001, help='learning rate for Critic, default=0.001')
     parser.add_argument('--beta1', type=float, default=0.5, help='beta1 for adam. default=0.5')
     parser.add_argument('--cuda', action='store_true', help='enables cuda')
     parser.add_argument('--ngpu', type=int, default=1, help='number of GPUs to use')
