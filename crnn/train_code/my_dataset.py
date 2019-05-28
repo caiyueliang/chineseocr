@@ -7,12 +7,12 @@ import torch
 from torch.utils.data import Dataset
 from torch.utils.data import sampler
 import torchvision.transforms as transforms
-import lmdb
-import six
-import sys
+# import lmdb
+# import six
+# import sys
 from PIL import Image, ImageFilter
 import numpy as np
-import cv2
+# import cv2
 
 
 class MyDataset(Dataset):

@@ -5,10 +5,10 @@ import torch.optim as optim
 import torch.utils.data
 from torch.autograd import Variable
 from torchvision import transforms as T
-from warpctc_pytorch import CTCLoss
+# from warpctc_pytorch import CTCLoss
 import os
-import crnn.utils as utils
-import crnn.train_code.my_dataset as my_dataset
+import train_code.utils as utils
+import train_code.my_dataset as my_dataset
 import time
 
 
@@ -29,7 +29,8 @@ class ModuleTrain:
         self.workers = workers
 
         self.converter = utils.strLabelConverter(alphabet)
-        self.criterion = CTCLoss()
+        # self.criterion = CTCLoss()
+        self.criterion = torch.nn.CTCLoss()
 
         if self.use_gpu:
             print("[use gpu] ...")
