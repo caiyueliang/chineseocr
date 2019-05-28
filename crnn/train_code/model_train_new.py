@@ -149,7 +149,7 @@ class ModuleTrain:
                     if pred.strip() == target.strip():
                         correct += 1
 
-            train_loss /= len(self.train_loader.dataset)
+            train_loss /= len(self.train_loader)
             acc = float(correct) / float(len(self.train_loader.dataset))
             print('[Train] Epoch: {} \tLoss: {:.6f}\tAcc: {:.6f}\tlr: {}'.format(epoch_i, train_loss, acc, self.lr))
 
@@ -229,7 +229,7 @@ class ModuleTrain:
         time_end = time.time()
         time_avg = float(time_end - time_start) / float(len(self.test_loader.dataset))
         accuracy = correct / float(len(self.test_loader.dataset))
-        test_loss /= len(self.test_loader.dataset)
+        test_loss /= len(self.test_loader)
         print('[Test] loss: %f, accuray: %f, time: %f' % (test_loss, accuracy, time_avg))
         return test_loss, accuracy
 
