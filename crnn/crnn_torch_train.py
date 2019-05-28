@@ -27,6 +27,9 @@ def parse_argvs():
     parser.add_argument('--ngpu', type=int, default=1, help='number of GPUs to use')
     parser.add_argument('--n_channels', type=int, default=3, help='image channels')
 
+    parser.add_argument('--old_class_num', type=int, default=100, help='input batch size')
+    parser.add_argument('--new_class_num', type=int, default=500, help='input batch size')
+
     # parser.add_argument('--crnn', help="path to crnn (to continue training)", default='./save_model/netCRNN.pth')
     # parser.add_argument('--crnn', help="path to crnn (to continue training)", default='')
     parser.add_argument('--alphabet', default=alphabetChinese_100)
@@ -50,14 +53,17 @@ if __name__ == '__main__':
 
     ngpu = int(opt.ngpu)
     nh = int(opt.nh)
-    nclass = len(opt.alphabet) + 1
-    print("[nclass] ", nclass)
+    num_class_old = opt.old_class_num + 1
+    num_class_new = opt.new_class_num + 1
+    print("[num_class_old] ", num_class_old)
+    print("[num_class_new] ", num_class_old)
+
     nc = int(opt.n_channels)
 
-    model = crnn.CRNN(imgH=opt.img_h, nc=nc, nclass=nclass, nh=nh)
+    model = crnn.CRNN(imgH=opt.img_h, nc=nc, nclass=num_class_old, nh=nh)
     out_put_model_file = os.path.join(opt.out_put, 'crnn.pth')
 
-    model_train = new_mt.ModuleTrain(train_path=opt.train_root, test_path=opt.val_root,
+    model_train = new_mt.ModuleTrain(train_path=opt.train_root, test_path=opt.val_root, num_class_new=num_class_new,
                                      model_file=out_put_model_file, model=model, alphabet=opt.alphabet,
                                      img_h=opt.img_h, img_w=opt.img_w, batch_size=opt.batch_size, lr=opt.lr)
 

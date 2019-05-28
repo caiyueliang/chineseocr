@@ -13,7 +13,7 @@ import time
 
 
 class ModuleTrain:
-    def __init__(self, train_path, test_path, model_file, model, alphabet,
+    def __init__(self, train_path, test_path, model_file, model, num_class_new, alphabet,
                  img_h=32, img_w=110, batch_size=64, lr=1e-3,
                  use_unicode=True, best_loss=10, use_gpu=True, workers=1):
         self.model = model
@@ -71,7 +71,12 @@ class ModuleTrain:
         #     self.optimizer = optim.RMSprop(crnn.parameters(), lr=opt.lr)
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=1e-5)
 
-        print(self.model)
+        # print(self.model)
+        in_features = self.model.rnn[1].embedding.in_features                       # 提取fc层中固定的输入参数
+        self.model.rnn[1].embedding = torch.nn.Linear(in_features, num_class_new)   # 修改类别为num_classes
+        # print(self.model)
+        # self.save_model_file = new_model_file
+
         # self.optimizer = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.9, weight_decay=1e-5)
 
     def train(self, epoch, decay_epoch=80):
