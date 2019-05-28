@@ -15,7 +15,7 @@ import time
 class ModuleTrain:
     def __init__(self, train_path, test_path, model_file, model, alphabet,
                  img_h=32, img_w=110, batch_size=64, lr=1e-3,
-                 use_unicode=True, best_loss=0.2, use_gpu=True, workers=1):
+                 use_unicode=True, best_loss=5, use_gpu=True, workers=1):
         self.model = model
         self.model_file = model_file
         self.use_unicode = use_unicode
