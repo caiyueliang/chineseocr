@@ -70,6 +70,8 @@ class ModuleTrain:
         # else:
         #     self.optimizer = optim.RMSprop(crnn.parameters(), lr=opt.lr)
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=1e-5)
+
+        print(self.model)
         # self.optimizer = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.9, weight_decay=1e-5)
 
     def train(self, epoch, decay_epoch=80):
@@ -148,6 +150,8 @@ class ModuleTrain:
                 # total_preds = self.converter.decode(preds.data, preds_size.data, raw=True)
                 # print(total_preds)
                 for pred, target in zip(sim_preds, target):
+                    # print('pred', pred, type(pred))
+                    # print('target', target, type(target))
                     if pred.strip() == target.strip():
                         correct += 1
 
@@ -229,6 +233,9 @@ class ModuleTrain:
             for pred, target in zip(sim_preds, cpu_texts):
                 if pred.strip() == target.strip():
                     correct += 1
+                # else:
+                #     print(pred.strip())
+                #     print(target.strip())
 
         time_end = time.time()
         time_avg = float(time_end - time_start) / float(len(self.test_loader.dataset))
