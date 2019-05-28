@@ -96,11 +96,15 @@ class ModuleTrain:
                 # data, target = Variable(data), Variable(target)
 
                 if self.use_unicode:
-                    target = [tx.decode('utf-8') for tx in target]
+                    # target = [tx.decode('utf-8') for tx in target]
+                    target = [tx for tx in target]
+                    # print(target)
 
                 batch_size = data.size(0)
                 utils.loadData(image, data)
                 t, l = self.converter.encode(target)
+                # print(t)
+                # print(l)
                 utils.loadData(text, t)
                 utils.loadData(length, l)
 

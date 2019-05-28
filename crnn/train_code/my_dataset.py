@@ -7,12 +7,9 @@ import torch
 from torch.utils.data import Dataset
 from torch.utils.data import sampler
 import torchvision.transforms as transforms
-# import lmdb
-# import six
-# import sys
 from PIL import Image, ImageFilter
 import numpy as np
-# import cv2
+import cv2
 
 
 class MyDataset(Dataset):
@@ -24,12 +21,13 @@ class MyDataset(Dataset):
         self.img_w = img_w
 
         for root, dirs, files in os.walk(self.root):
-            self.sample_list.append(os.path.join(root, files))
+            for file in files:
+                self.sample_list.append(os.path.join(root, file))
         # with open(self.label_file, 'r') as f:
         #     self.sample_list = f.readlines()
 
         self.nSamples = len(self.sample_list)
-        print(self.sample_list)
+        # print(self.sample_list)
         print('label_file: root: %s samples len: %d' % (self.root, self.nSamples))
 
         self.transform = transform
@@ -41,12 +39,16 @@ class MyDataset(Dataset):
     # PIL
     def __getitem__(self, index):
         assert index < self.nSamples, 'index range error'
-        record = self.sample_list[index].replace('\n', '').replace('\r', '').replace(' ', '')
-        str_list = record.split(':')
-        label = str_list[-1]
-        image_path = str_list[0]
+        image_path = self.sample_list[index]
+        label = self.sample_list[index].replace(' ', '').split('_')[-1].split('.')[0]
+        # record = self.sample_list[index].replace('\n', '').replace('\r', '').replace(' ', '')
+        # str_list = record.split(':')
+        # label = str_list[-1]
+        # image_path = str_list[0]
 
-        img = Image.open(os.path.join(self.root, image_path))
+        # print("image_path", image_path)
+        # print("label", label)
+        img = Image.open(image_path)
 
         if self.is_train is True:
             img = self.random_gaussian(img)
@@ -58,9 +60,9 @@ class MyDataset(Dataset):
         if self.target_transform is not None:
             label = self.target_transform(label)
 
-        print(img)
-        print(img.size())
-        print(label)
+        # print(img)
+        # print(img.size())
+        # print(label)
         return (img, label)
 
     # 随机高斯模糊(PIL)

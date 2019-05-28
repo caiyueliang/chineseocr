@@ -17,18 +17,22 @@ class strLabelConverter(object):
             self.dict[char] = i + 1
 
     def encode(self, text, depth=0):
+        # print(type(text), text)
         """Support batch or single str."""
-        if isinstance(text, str):
-            text = [self.dict[char.lower()] for char in text]
-            length = [len(text)]
+        # if isinstance(text, str):
+        #     print('is str 1')
+        #     text = [self.dict[char.lower()] for char in text]
+        #     length = [len(text)]
+        #     print(text)
+        #     print(length)
             
         if isinstance(text, str):
             text = [self.dict.get(char, 0) for char in text]
             length = [len(text)]
         # add for unicode
-        elif isinstance(text, unicode):
-            text = [self.dict.get(char, self.dict[u'-']) for char in text]
-            length = [len(text)]
+        # elif isinstance(text, unicode):
+        #     text = [self.dict.get(char, self.dict[u'-']) for char in text]
+        #     length = [len(text)]
             
         elif isinstance(text, collections.Iterable):
             length = [len(s) for s in text]
