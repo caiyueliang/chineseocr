@@ -67,8 +67,8 @@ class CRNN(nn.Module):
         else:
             self.linear = nn.Linear(nh*2, nclass)
 
-        if init_weights:
-            self._initialize_weights()
+        # if init_weights:
+        #     self._initialize_weights()
 
     def forward(self, input):
         # conv features
