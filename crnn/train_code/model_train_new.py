@@ -70,6 +70,7 @@ class ModuleTrain:
         # else:
         #     self.optimizer = optim.RMSprop(crnn.parameters(), lr=opt.lr)
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=1e-5)
+        # self.optimizer = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.9, weight_decay=1e-5)
 
         print(self.model)
         in_features = self.model.rnn[1].embedding.in_features                       # 提取fc层中固定的输入参数
@@ -78,9 +79,6 @@ class ModuleTrain:
         if self.use_gpu:
             print("[use gpu] ...")
             self.model = self.model.cuda()
-        # self.save_model_file = new_model_file
-
-        # self.optimizer = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.9, weight_decay=1e-5)
 
     def train(self, epoch, decay_epoch=80):
         image = torch.FloatTensor(self.batch_size, 3, self.img_h, self.img_w)

@@ -17,7 +17,7 @@ class BidirectionalLSTM(nn.Module):
     
 
 class CRNN(nn.Module):
-    def __init__(self, imgH, nc, nclass, nh, n_rnn=2, leakyRelu=False, lstmFlag=True):
+    def __init__(self, imgH, nc, nclass, nh, n_rnn=2, leakyRelu=False, lstmFlag=True, init_weights=True):
         """
         是否加入lstm特征层
         """
@@ -67,6 +67,9 @@ class CRNN(nn.Module):
         else:
             self.linear = nn.Linear(nh*2, nclass)
 
+        if init_weights:
+            self._initialize_weights()
+
     def forward(self, input):
         # conv features
         conv = self.cnn(input)
@@ -87,3 +90,16 @@ class CRNN(nn.Module):
             output = output.view(T, b, -1)
 
         return output
+
+    def _initialize_weights(self):
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                nn.init.kaiming_normal_(m.weight, mode='fan_out', nonlinearity='relu')
+                if m.bias is not None:
+                    nn.init.constant_(m.bias, 0)
+            elif isinstance(m, nn.BatchNorm2d):
+                nn.init.constant_(m.weight, 1)
+                nn.init.constant_(m.bias, 0)
+            elif isinstance(m, nn.Linear):
+                nn.init.normal_(m.weight, 0, 0.01)
+                nn.init.constant_(m.bias, 0)
