@@ -27,6 +27,7 @@ def parse_argvs():
     parser.add_argument('--ngpu', type=int, default=1, help='number of GPUs to use')
     parser.add_argument('--n_channels', type=int, default=3, help='image channels')
 
+    parser.add_argument('--fine_tuning', type=bool, default=False, help='fine_tuning')
     parser.add_argument('--old_class_num', type=int, default=3500, help='input batch size')
     parser.add_argument('--new_class_num', type=int, default=3500, help='input batch size')
 
@@ -64,9 +65,9 @@ if __name__ == '__main__':
     out_put_model_file = os.path.join(opt.out_put, 'crnn.pth')
 
     model_train = new_mt.ModuleTrain(train_path=opt.train_root, test_path=opt.val_root, num_class_new=num_class_new,
-                                     model_file=out_put_model_file, model=model, alphabet=opt.alphabet,
+                                     fine_tuning=opt.fine_tuning, model_file=out_put_model_file, model=model, alphabet=opt.alphabet,
                                      img_h=opt.img_h, img_w=opt.img_w, batch_size=opt.batch_size, lr=opt.lr)
 
-    model_train.train(600, 400)
+    model_train.train(1000, 600)
     model_train.test()
 
