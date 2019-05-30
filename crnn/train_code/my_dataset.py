@@ -52,7 +52,7 @@ class MyDataset(Dataset):
 
         if self.is_train is True:
             img = self.random_gaussian(img)
-            # img = self.random_bright(img)
+            img = self.random_bright(img)
             img = self.random_crop(img)
 
         if self.transform is not None:
