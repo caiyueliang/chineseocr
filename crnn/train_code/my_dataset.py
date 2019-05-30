@@ -52,6 +52,7 @@ class MyDataset(Dataset):
 
         if self.is_train is True:
             img = self.random_gaussian(img)
+            img = self.random_bright(img)
             img = self.random_crop(img)
 
         if self.transform is not None:
@@ -105,6 +106,16 @@ class MyDataset(Dataset):
         # cv2.waitKey()
 
         return roi
+
+    # 随机调亮(opencv)
+    def random_bright(self, im, delta=16):
+        alpha = random.random()
+        if alpha > 0.2:
+            im = cv2.cvtColor(np.asarray(im), cv2.COLOR_RGB2BGR)
+            im = im * alpha + random.randrange(-delta, delta)
+            im = im.clip(min=0, max=255).astype(np.uint8)
+            im = Image.fromarray(cv2.cvtColor(im, cv2.COLOR_BGR2RGB))
+        return im
 
     # # opencv
     # def __getitem__(self, index):
