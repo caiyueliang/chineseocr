@@ -157,8 +157,8 @@ class ModuleTrain:
                 # total_preds = self.converter.decode(preds.data, preds_size.data, raw=True)
                 # print(total_preds)
 
-                if np.isnan(loss.item()):
-                    print("==============================================")
+                if np.isnan(loss.item()) or batch_idx % 10000 == 0:
+                    print("==============================================", batch_idx)
                     print(loss.item())
                     print(target)
                     print(t)
