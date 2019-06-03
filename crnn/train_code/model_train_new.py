@@ -9,6 +9,7 @@ from torchvision import transforms as T
 import os
 import train_code.utils as utils
 import train_code.my_dataset as my_dataset
+import numpy as np
 import time
 
 
@@ -55,7 +56,7 @@ class ModuleTrain:
         train_dataset = my_dataset.MyDataset(root=train_path, transform=self.transform,
                                              is_train=True, img_h=self.img_h, img_w=self.img_w)
         self.train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=self.batch_size,
-                                                        shuffle=True, num_workers=int(self.workers))
+                                                        shuffle=False, num_workers=int(self.workers))
         # test_label = os.path.join(test_path, 'labels_normal.txt')
         test_dataset = my_dataset.MyDataset(root=test_path, transform=self.transform,
                                             is_train=False, img_h=self.img_h, img_w=self.img_w)
@@ -69,8 +70,8 @@ class ModuleTrain:
         #     self.optimizer = optim.Adadelta(crnn.parameters(), lr=opt.lr)
         # else:
         #     self.optimizer = optim.RMSprop(crnn.parameters(), lr=opt.lr)
-        self.optimizer = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=1e-5)
-        # self.optimizer = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.9, weight_decay=1e-5)
+        # self.optimizer = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=1e-5)
+        self.optimizer = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.9, weight_decay=1e-5)
 
         if fine_tuning:
             print(self.model)
@@ -138,7 +139,11 @@ class ModuleTrain:
                 # 更新参数
                 self.optimizer.step()
                 train_loss += loss.item()
-
+                if np.isnan(loss.item()):
+                    print(loss.item())
+                    print(target)
+                    print(t)
+                    print(l)
                 # print(preds.size())
                 # total = 0.0
                 # print('len', len(preds.data[0][0]))
