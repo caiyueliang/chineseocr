@@ -2,7 +2,7 @@
 from __future__ import print_function
 import os
 import argparse
-from keys import alphabetChinese_3563
+from keys import alphabetChinese_3564
 import network_torch as crnn
 from train_code import model_train_new as new_mt
 
@@ -29,12 +29,12 @@ def parse_argvs():
     parser.add_argument('--n_channels', type=int, default=3, help='image channels')
 
     parser.add_argument('--fine_tuning', type=bool, default=False, help='fine_tuning')
-    parser.add_argument('--old_class_num', type=int, default=3563, help='input batch size')
-    parser.add_argument('--new_class_num', type=int, default=3563, help='input batch size')
+    parser.add_argument('--old_class_num', type=int, default=3564, help='input batch size')
+    parser.add_argument('--new_class_num', type=int, default=3564, help='input batch size')
 
     # parser.add_argument('--crnn', help="path to crnn (to continue training)", default='./save_model/netCRNN.pth')
     # parser.add_argument('--crnn', help="path to crnn (to continue training)", default='')
-    parser.add_argument('--alphabet', default=alphabetChinese_3563)
+    parser.add_argument('--alphabet', default=alphabetChinese_3564)
     parser.add_argument('--out_put', help='Where to store samples and models', default='./checkpoints')
     parser.add_argument('--use_unicode', type=bool, help='use_unicode', default=True)
     parser.add_argument('--displayInterval', type=int, default=100, help='Interval to be displayed')
@@ -69,6 +69,6 @@ if __name__ == '__main__':
                                      fine_tuning=opt.fine_tuning, model_file=out_put_model_file, model=model, alphabet=opt.alphabet,
                                      img_h=opt.img_h, img_w=opt.img_w, batch_size=opt.batch_size, lr=opt.lr)
 
-    model_train.train(100, 80)
+    model_train.train(80, 50)
     model_train.test()
 
