@@ -70,8 +70,8 @@ class ModuleTrain:
         #     self.optimizer = optim.Adadelta(crnn.parameters(), lr=opt.lr)
         # else:
         #     self.optimizer = optim.RMSprop(crnn.parameters(), lr=opt.lr)
-        # self.optimizer = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=1e-5)
-        self.optimizer = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.9, weight_decay=1e-5)
+        self.optimizer = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=1e-5)
+        # self.optimizer = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.9, weight_decay=1e-5)
 
         if fine_tuning:
             print(self.model)
