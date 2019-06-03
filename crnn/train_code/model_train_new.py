@@ -156,11 +156,6 @@ class ModuleTrain:
                 # print(target)
                 # total_preds = self.converter.decode(preds.data, preds_size.data, raw=True)
                 # print(total_preds)
-                for pred, target in zip(sim_preds, target):
-                    # print('pred', pred, type(pred))
-                    # print('target', target, type(target))
-                    if pred.strip() == target.strip():
-                        correct += 1
 
                 if np.isnan(loss.item()):
                     print("==============================================")
@@ -171,6 +166,12 @@ class ModuleTrain:
                     print(sim_preds)
                     total_preds = self.converter.decode(preds.data, preds_size.data, raw=True)
                     print(total_preds)
+
+                for pred, target in zip(sim_preds, target):
+                    # print('pred', pred, type(pred))
+                    # print('target', target, type(target))
+                    if pred.strip() == target.strip():
+                        correct += 1
 
             train_loss /= len(self.train_loader)
             acc = float(correct) / float(len(self.train_loader.dataset))
