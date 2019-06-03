@@ -2,7 +2,7 @@
 from __future__ import print_function
 import os
 import argparse
-from keys import alphabetChinese_3565
+from keys import alphabetChinese_3563
 import network_torch as crnn
 from train_code import model_train_new as new_mt
 
@@ -23,18 +23,18 @@ def parse_argvs():
     parser.add_argument('--nh', type=int, default=256, help='size of the lstm hidden state')
     parser.add_argument('--niter', type=int, default=100, help='number of epochs to train for')
     parser.add_argument('--lr', type=float, default=0.0001, help='learning rate for Critic, default=0.001')
-    parser.add_argument('--beta1', type=float, default=0.5, help='beta1 for adam. default=0.5')
+    parser.add_argument('--beta1', type=float, default=0.9, help='beta1 for adam. default=0.5')
     parser.add_argument('--cuda', action='store_true', help='enables cuda')
     parser.add_argument('--ngpu', type=int, default=1, help='number of GPUs to use')
     parser.add_argument('--n_channels', type=int, default=3, help='image channels')
 
-    parser.add_argument('--fine_tuning', type=bool, default=False, help='fine_tuning')
+    parser.add_argument('--fine_tuning', type=bool, default=True, help='fine_tuning')
     parser.add_argument('--old_class_num', type=int, default=3565, help='input batch size')
-    parser.add_argument('--new_class_num', type=int, default=3565, help='input batch size')
+    parser.add_argument('--new_class_num', type=int, default=3563, help='input batch size')
 
     # parser.add_argument('--crnn', help="path to crnn (to continue training)", default='./save_model/netCRNN.pth')
     # parser.add_argument('--crnn', help="path to crnn (to continue training)", default='')
-    parser.add_argument('--alphabet', default=alphabetChinese_3565)
+    parser.add_argument('--alphabet', default=alphabetChinese_3563)
     parser.add_argument('--out_put', help='Where to store samples and models', default='./checkpoints')
     parser.add_argument('--use_unicode', type=bool, help='use_unicode', default=True)
     parser.add_argument('--displayInterval', type=int, default=100, help='Interval to be displayed')

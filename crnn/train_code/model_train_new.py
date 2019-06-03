@@ -56,7 +56,7 @@ class ModuleTrain:
         train_dataset = my_dataset.MyDataset(root=train_path, transform=self.transform,
                                              is_train=True, img_h=self.img_h, img_w=self.img_w)
         self.train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=self.batch_size,
-                                                        shuffle=False, num_workers=int(self.workers))
+                                                        shuffle=True, num_workers=int(self.workers))
         # test_label = os.path.join(test_path, 'labels_normal.txt')
         test_dataset = my_dataset.MyDataset(root=test_path, transform=self.transform,
                                             is_train=False, img_h=self.img_h, img_w=self.img_w)
@@ -157,16 +157,16 @@ class ModuleTrain:
                 # total_preds = self.converter.decode(preds.data, preds_size.data, raw=True)
                 # print(total_preds)
 
-                print("==============================================", batch_idx)
-                print(loss.item())
-                print(target)
-                # print(t)
-                # print(l)
-                total_preds = self.converter.decode(preds.data, preds_size.data, raw=True)
-                print(total_preds)
-                print(sim_preds)
-                if np.isnan(loss.item()):
-                    assert 1 == 0
+                # print("==============================================", batch_idx)
+                # print(loss.item())
+                # print(target)
+                # # print(t)
+                # # print(l)
+                # total_preds = self.converter.decode(preds.data, preds_size.data, raw=True)
+                # print(total_preds)
+                # print(sim_preds)
+                # if np.isnan(loss.item()):
+                #     assert 1 == 0
 
                 for pred, target in zip(sim_preds, target):
                     # print('pred', pred, type(pred))
@@ -250,16 +250,16 @@ class ModuleTrain:
             preds = preds.transpose(1, 0).contiguous().view(-1)
             sim_preds = self.converter.decode(preds.data, preds_size.data, raw=False)
 
-            print("==============================================")
-            print(loss.item())
-            print(target)
-            # print(t)
-            # print(l)
-            total_preds = self.converter.decode(preds.data, preds_size.data, raw=True)
-            print(total_preds)
-            print(sim_preds)
-            if np.isnan(loss.item()):
-                assert 1 == 0
+            # print("==============================================")
+            # print(loss.item())
+            # print(target)
+            # # print(t)
+            # # print(l)
+            # total_preds = self.converter.decode(preds.data, preds_size.data, raw=True)
+            # print(total_preds)
+            # print(sim_preds)
+            # if np.isnan(loss.item()):
+            #     assert 1 == 0
 
             for pred, target in zip(sim_preds, cpu_texts):
                 if pred.strip() == target.strip():
