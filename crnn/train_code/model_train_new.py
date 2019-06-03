@@ -112,8 +112,10 @@ class ModuleTrain:
                     target = [tx for tx in target]
                     # print(target)
 
+                # print('data size', data.size())         # [64, 3, 32, 270]
                 batch_size = data.size(0)
                 utils.loadData(image, data)
+                # print('image size', image.size())       # [64, 3, 32, 270]
                 t, l = self.converter.encode(target)
                 # print(t)
                 # print(l)
@@ -129,7 +131,7 @@ class ModuleTrain:
                     p.requires_grad = True
 
                 # 计算损失
-                preds = self.model(image)
+                preds = self.model(image)               # image size: [64, 3, 32, 270]  (char num 10)
                 preds_size = Variable(torch.IntTensor([preds.size(0)] * batch_size))
                 # print('preds_size', preds_size)
                 loss = self.criterion(preds, text, preds_size, length)
