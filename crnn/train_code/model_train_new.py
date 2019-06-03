@@ -139,11 +139,6 @@ class ModuleTrain:
                 # 更新参数
                 self.optimizer.step()
                 train_loss += loss.item()
-                if np.isnan(loss.item()):
-                    print(loss.item())
-                    print(target)
-                    print(t)
-                    print(l)
                 # print(preds.size())
                 # total = 0.0
                 # print('len', len(preds.data[0][0]))
@@ -166,6 +161,16 @@ class ModuleTrain:
                     # print('target', target, type(target))
                     if pred.strip() == target.strip():
                         correct += 1
+
+                if np.isnan(loss.item()):
+                    print("==============================================")
+                    print(loss.item())
+                    print(target)
+                    print(t)
+                    print(l)
+                    print(sim_preds)
+                    total_preds = self.converter.decode(preds.data, preds_size.data, raw=True)
+                    print(total_preds)
 
             train_loss /= len(self.train_loader)
             acc = float(correct) / float(len(self.train_loader.dataset))

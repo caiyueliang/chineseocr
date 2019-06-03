@@ -65,6 +65,7 @@ class OCR:
         else:
             detectAngle = textAngle                         # 是否进行文字方向检测
             _, result, angle = model.model(img,
+                                           file_name="test.jpg",
                                            detectAngle=detectAngle,                     # 是否进行文字方向检测，通过web传参控制
                                            config=dict(MAX_HORIZONTAL_GAP=50,           # 字符之间的最大间隔，用于文本行的合并
                                                        MIN_V_OVERLAPS=0.6,
