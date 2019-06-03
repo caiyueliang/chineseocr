@@ -9,12 +9,12 @@ from train_code import model_train_new as new_mt
 
 def parse_argvs():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_root', help='path to dataset', default='../../Data/OCR_3500_2/train')
-    parser.add_argument('--val_root', help='path to dataset', default='../../Data/OCR_3500_2/test')
+    parser.add_argument('--train_root', help='path to dataset', default='../../Data/OCR_3500/train')
+    parser.add_argument('--val_root', help='path to dataset', default='../../Data/OCR_3500/test')
     parser.add_argument('--model', help='model to train', default='CRNN')
 
     parser.add_argument('--workers', type=int, help='number of data loading workers', default=1)
-    parser.add_argument('--batch_size', type=int, default=128, help='input batch size')
+    parser.add_argument('--batch_size', type=int, default=64, help='input batch size')
     # parser.add_argument('--imgH', type=int, default=32, help='the height of the input image to network')
     # parser.add_argument('--imgW', type=int, default=256, help='the width of the input image to network')
     parser.add_argument('--img_h', type=int, default=32, help='the height of the input image to network')
@@ -28,8 +28,8 @@ def parse_argvs():
     parser.add_argument('--ngpu', type=int, default=1, help='number of GPUs to use')
     parser.add_argument('--n_channels', type=int, default=3, help='image channels')
 
-    parser.add_argument('--fine_tuning', type=bool, default=True, help='fine_tuning')
-    parser.add_argument('--old_class_num', type=int, default=3565, help='input batch size')
+    parser.add_argument('--fine_tuning', type=bool, default=False, help='fine_tuning')
+    parser.add_argument('--old_class_num', type=int, default=3563, help='input batch size')
     parser.add_argument('--new_class_num', type=int, default=3563, help='input batch size')
 
     # parser.add_argument('--crnn', help="path to crnn (to continue training)", default='./save_model/netCRNN.pth')
