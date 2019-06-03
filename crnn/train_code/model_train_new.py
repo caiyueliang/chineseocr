@@ -157,7 +157,6 @@ class ModuleTrain:
                 # total_preds = self.converter.decode(preds.data, preds_size.data, raw=True)
                 # print(total_preds)
 
-                # if np.isnan(loss.item()) or batch_idx % 10000 == 0:
                 print("==============================================", batch_idx)
                 print(loss.item())
                 print(target)
@@ -250,6 +249,18 @@ class ModuleTrain:
             # preds = preds.squeeze(2)
             preds = preds.transpose(1, 0).contiguous().view(-1)
             sim_preds = self.converter.decode(preds.data, preds_size.data, raw=False)
+
+            print("==============================================")
+            print(loss.item())
+            print(target)
+            # print(t)
+            # print(l)
+            total_preds = self.converter.decode(preds.data, preds_size.data, raw=True)
+            print(total_preds)
+            print(sim_preds)
+            if np.isnan(loss.item()):
+                assert 1 == 0
+
             for pred, target in zip(sim_preds, cpu_texts):
                 if pred.strip() == target.strip():
                     correct += 1
