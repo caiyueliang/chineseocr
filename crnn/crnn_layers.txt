@@ -1,0 +1,20 @@
+data size torch.Size([64, 3, 32, 270])
+image size torch.Size([64, 3, 32, 270])
+input size torch.Size([64, 3, 32, 270])		| [b, c, h, w]
+
+conv size torch.Size([64, 512, 1, 68])		| [b, c, h, w]	512维，高度缩小32倍，宽度缩小4倍
+conv size torch.Size([64, 512, 68])			| [b, c, w]
+conv size torch.Size([68, 64, 512])			| [w, b, c]
+
+Lstm input size torch.Size([68, 64, 512])	| [w, b, c]
+recurrent size torch.Size([68, 64, 512])	| [w, b, c]	LSTM输出
+t_rec size torch.Size([4352, 512])			| [w × b, c]
+output size torch.Size([4352, 256])			| [w × b, c] 全链接层输出
+output size torch.Size([68, 64, 256])		| [w, b, c]
+
+Lstm input size torch.Size([68, 64, 256])	| [w, b, c]
+recurrent size torch.Size([68, 64, 512])	| [w, b, c]	LSTM输出
+t_rec size torch.Size([4352, 512])			| [w × b, c]
+output size torch.Size([4352, 3564])		| [w × b, c] 全链接层输出
+output size torch.Size([68, 64, 3564])		| [w, b, c]
+output size torch.Size([68, 64, 3564])
