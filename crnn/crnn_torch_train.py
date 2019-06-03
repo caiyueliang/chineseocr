@@ -14,7 +14,7 @@ def parse_argvs():
     parser.add_argument('--model', help='model to train', default='CRNN')
 
     parser.add_argument('--workers', type=int, help='number of data loading workers', default=1)
-    parser.add_argument('--batch_size', type=int, default=64, help='input batch size')
+    parser.add_argument('--batch_size', type=int, default=128, help='input batch size')
     # parser.add_argument('--imgH', type=int, default=32, help='the height of the input image to network')
     # parser.add_argument('--imgW', type=int, default=256, help='the width of the input image to network')
     parser.add_argument('--img_h', type=int, default=32, help='the height of the input image to network')
