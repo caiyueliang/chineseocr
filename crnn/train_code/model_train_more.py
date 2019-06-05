@@ -50,7 +50,7 @@ class ModuleTrain:
         self.transform_1 = T.Compose([
             T.Resize((self.img_h, 270)),
             T.ToTensor(),
-            # T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
+            T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
         ])
         train_dataset_1 = my_dataset.MyDataset(root=os.path.join(train_path, 'black_1'), transform=self.transform_1,
                                                is_train=True, img_h=self.img_h, img_w=self.img_w, nc=nc)
@@ -65,7 +65,7 @@ class ModuleTrain:
         self.transform_3 = T.Compose([
             T.Resize((self.img_h, 300)),
             T.ToTensor(),
-            # T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
+            T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
         ])
         train_dataset_3 = my_dataset.MyDataset(root=os.path.join(train_path, 'black_3'), transform=self.transform_3,
                                                is_train=True, img_h=self.img_h, img_w=self.img_w, nc=nc)
@@ -80,7 +80,7 @@ class ModuleTrain:
         self.transform_5 = T.Compose([
             T.Resize((self.img_h, 380)),
             T.ToTensor(),
-            # T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
+            T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
         ])
         train_dataset_5 = my_dataset.MyDataset(root=os.path.join(train_path, 'black_5'), transform=self.transform_5,
                                                is_train=True, img_h=self.img_h, img_w=self.img_w, nc=nc)
