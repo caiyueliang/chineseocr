@@ -76,7 +76,9 @@ def crnnRec(im, boxes, leftAdjust=False, rightAdjust=False, alph=0.2, f=1.0):
     leftAdjust, rightAdjust 是否左右调整box 边界误差，解决文字漏检
     """
     results = []
-    im = Image.fromarray(im)
+    # im = Image.fromarray(im)
+    im = Image.fromarray(cv2.cvtColor(im, cv2.COLOR_BGR2RGB))
+
     for index, box in enumerate(boxes):
         degree, w, h, cx, cy = solve(box)
 
@@ -144,6 +146,7 @@ def model(img, file_name, detectAngle=False, config={}, leftAdjust=False, rightA
 
     config['img'] = img
     image_cv = copy.copy(img)
+    cv2.imshow("model", image_cv)
 
     text_recs = text_detect(**config)                           # 文字检测
     # print('text_recs', text_recs)
@@ -154,6 +157,7 @@ def model(img, file_name, detectAngle=False, config={}, leftAdjust=False, rightA
     draw_boxes(image_cv, text_recs, file_name, (255, 0, 0), "./output")
 
     # print('model', img.shape)
+
     result = crnnRec(np.array(img), newBox, leftAdjust, rightAdjust, alpha, 1.0 / f)  # ocr识别
     print('result', result)
 

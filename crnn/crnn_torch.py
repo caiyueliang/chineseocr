@@ -61,9 +61,12 @@ def crnnOcr(image):
     w = image.size[0] / scale
     w = int(w)
 
-    image = image.resize((w, 32), resample=Image.HAMMING)
+    # image = image.resize((w, 32), resample=Image.HAMMING)
     image_cv = cv2.cvtColor(np.asarray(image), cv2.COLOR_RGB2BGR)
+    print(image_cv.shape)
+    image_cv = cv2.resize(image_cv, (w, 32))
     cv2.imshow("crnnOcr", image_cv)
+    image = Image.fromarray(cv2.cvtColor(image_cv, cv2.COLOR_BGR2RGB))
 
     image = transform(image)
     # image = resizeNormalize((w, 32))
