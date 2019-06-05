@@ -10,8 +10,9 @@ from train_code import model_train_more as more_mt
 
 def parse_argvs():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_root', help='path to dataset', default='../../Data/OCR_3500_2/train')
-    parser.add_argument('--val_root', help='path to dataset', default='../../Data/OCR_3500_2/test')
+    parser.add_argument('--train_mode', type=int, help='mode', default=1)
+    parser.add_argument('--train_root', help='path to dataset', default='../../Data/OCR_3500/train')
+    parser.add_argument('--val_root', help='path to dataset', default='../../Data/OCR_3500/test')
     parser.add_argument('--model', help='model to train', default='CRNN')
 
     parser.add_argument('--workers', type=int, help='number of data loading workers', default=1)
@@ -67,12 +68,14 @@ if __name__ == '__main__':
     model = crnn.CRNN(imgH=opt.img_h, nc=nc, nclass=num_class_old, nh=nh)
     out_put_model_file = os.path.join(opt.out_put, 'crnn.pth')
 
-    # model_train = new_mt.ModuleTrain(train_path=opt.train_root, test_path=opt.val_root, num_class_new=num_class_new,
-    #                                  fine_tuning=opt.fine_tuning, model_file=out_put_model_file, model=model, alphabet=opt.alphabet,
-    #                                  img_h=opt.img_h, img_w=opt.img_w, batch_size=opt.batch_size, lr=opt.lr, nc=nc)
-    model_train = more_mt.ModuleTrain(train_path=opt.train_root, test_path=opt.val_root, num_class_new=num_class_new,
-                                      fine_tuning=opt.fine_tuning, model_file=out_put_model_file, model=model, alphabet=opt.alphabet,
-                                      img_h=opt.img_h, img_w=opt.img_w, batch_size=opt.batch_size, lr=opt.lr, nc=nc)
+    if opt.train_mode == 0:
+        model_train = new_mt.ModuleTrain(train_path=opt.train_root, test_path=opt.val_root, num_class_new=num_class_new,
+                                         fine_tuning=opt.fine_tuning, model_file=out_put_model_file, model=model, alphabet=opt.alphabet,
+                                         img_h=opt.img_h, img_w=opt.img_w, batch_size=opt.batch_size, lr=opt.lr, nc=nc)
+    else:
+        model_train = more_mt.ModuleTrain(train_path=opt.train_root, test_path=opt.val_root, num_class_new=num_class_new,
+                                          fine_tuning=opt.fine_tuning, model_file=out_put_model_file, model=model, alphabet=opt.alphabet,
+                                          img_h=opt.img_h, img_w=opt.img_w, batch_size=opt.batch_size, lr=opt.lr, nc=nc)
 
     model_train.train(120, 80)
     model_train.test()

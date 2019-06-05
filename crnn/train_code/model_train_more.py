@@ -46,30 +46,52 @@ class ModuleTrain:
         else:
             print('[Load model] error !!!')
 
-        self.transform = T.Compose([
-            T.Resize((self.img_h, self.img_w)),
+        # =================================================================================================
+        self.transform_1 = T.Compose([
+            T.Resize((self.img_h, 270)),
             T.ToTensor(),
             # T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
         ])
+        train_dataset_1 = my_dataset.MyDataset(root=os.path.join(train_path, 'black_1'), transform=self.transform_1,
+                                               is_train=True, img_h=self.img_h, img_w=self.img_w, nc=nc)
+        self.train_loader_1 = torch.utils.data.DataLoader(dataset=train_dataset_1, batch_size=self.batch_size,
+                                                          shuffle=True, num_workers=int(self.workers))
+        test_dataset_1 = my_dataset.MyDataset(root=os.path.join(test_path, 'black_1'), transform=self.transform_1,
+                                              is_train=False, img_h=self.img_h, img_w=self.img_w, nc=nc)
+        self.test_loader_1 = torch.utils.data.DataLoader(dataset=test_dataset_1, batch_size=self.batch_size,
+                                                         shuffle=False, num_workers=int(self.workers))
 
-        # train_label = os.path.join(train_path, 'labels_normal.txt')
-        train_dataset = my_dataset.MyDataset(root=train_path, transform=self.transform,
-                                             is_train=True, img_h=self.img_h, img_w=self.img_w, nc=nc)
-        self.train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=self.batch_size,
-                                                        shuffle=True, num_workers=int(self.workers))
-        # test_label = os.path.join(test_path, 'labels_normal.txt')
-        test_dataset = my_dataset.MyDataset(root=test_path, transform=self.transform,
-                                            is_train=False, img_h=self.img_h, img_w=self.img_w, nc=nc)
-        self.test_loader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=self.batch_size,
-                                                       shuffle=False, num_workers=int(self.workers))
+        # =================================================================================================
+        self.transform_3 = T.Compose([
+            T.Resize((self.img_h, 300)),
+            T.ToTensor(),
+            # T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
+        ])
+        train_dataset_3 = my_dataset.MyDataset(root=os.path.join(train_path, 'black_3'), transform=self.transform_3,
+                                               is_train=True, img_h=self.img_h, img_w=self.img_w, nc=nc)
+        self.train_loader_3 = torch.utils.data.DataLoader(dataset=train_dataset_3, batch_size=self.batch_size,
+                                                          shuffle=True, num_workers=int(self.workers))
+        test_dataset_3 = my_dataset.MyDataset(root=os.path.join(test_path, 'black_3'), transform=self.transform_3,
+                                              is_train=False, img_h=self.img_h, img_w=self.img_w, nc=nc)
+        self.test_loader_3 = torch.utils.data.DataLoader(dataset=test_dataset_3, batch_size=self.batch_size,
+                                                         shuffle=False, num_workers=int(self.workers))
 
-        # setup optimizer
-        # if opt.adam:
-        #     self.optimizer = optim.Adam(crnn.parameters(), lr=opt.lr, betas=(opt.beta1, 0.999))
-        # elif opt.adadelta:
-        #     self.optimizer = optim.Adadelta(crnn.parameters(), lr=opt.lr)
-        # else:
-        #     self.optimizer = optim.RMSprop(crnn.parameters(), lr=opt.lr)
+        # =================================================================================================
+        self.transform_5 = T.Compose([
+            T.Resize((self.img_h, 380)),
+            T.ToTensor(),
+            # T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
+        ])
+        train_dataset_5 = my_dataset.MyDataset(root=os.path.join(train_path, 'black_5'), transform=self.transform_5,
+                                               is_train=True, img_h=self.img_h, img_w=self.img_w, nc=nc)
+        self.train_loader_5 = torch.utils.data.DataLoader(dataset=train_dataset_5, batch_size=self.batch_size,
+                                                          shuffle=True, num_workers=int(self.workers))
+        test_dataset_5 = my_dataset.MyDataset(root=os.path.join(test_path, 'black_5'), transform=self.transform_5,
+                                              is_train=False, img_h=self.img_h, img_w=self.img_w, nc=nc)
+        self.test_loader_5 = torch.utils.data.DataLoader(dataset=test_dataset_5, batch_size=self.batch_size,
+                                                         shuffle=False, num_workers=int(self.workers))
+
+        # =================================================================================================
         self.optimizer = optim.Adam(self.model.parameters(), lr=self.lr, weight_decay=1e-5)
         # self.optimizer = optim.SGD(self.model.parameters(), lr=self.lr, momentum=0.9, weight_decay=1e-5)
 
@@ -104,7 +126,8 @@ class ModuleTrain:
 
             print('================================================')
             self.model.train()
-            for batch_idx, (data, target) in enumerate(self.train_loader):              # 训练
+            # =================================================================================
+            for batch_idx, (data, target) in enumerate(self.train_loader_1):              # 训练
                 # data, target = Variable(data), Variable(target)
 
                 if self.use_unicode:
@@ -176,8 +199,85 @@ class ModuleTrain:
                     if pred.strip() == target.strip():
                         correct += 1
 
-            train_loss /= len(self.train_loader)
-            acc = float(correct) / float(len(self.train_loader.dataset))
+            # =================================================================================
+            for batch_idx, (data, target) in enumerate(self.train_loader_3):              # 训练
+
+                if self.use_unicode:
+                    target = [tx for tx in target]
+
+                batch_size = data.size(0)
+                utils.loadData(image, data)
+                t, l = self.converter.encode(target)
+                utils.loadData(text, t)
+                utils.loadData(length, l)
+
+                if self.use_gpu:
+                    image = image.cuda()
+
+                # 梯度清0
+                self.optimizer.zero_grad()
+                for p in self.model.parameters():
+                    p.requires_grad = True
+
+                # 计算损失
+                preds = self.model(image)               # image size: [64, 3, 32, 270]  (char num 10)
+                preds_size = Variable(torch.IntTensor([preds.size(0)] * batch_size))
+                loss = self.criterion(preds, text, preds_size, length)
+                # 反向传播计算梯度
+                loss.backward()
+                # 更新参数
+                self.optimizer.step()
+                train_loss += loss.item()
+
+                _, preds = preds.max(2)
+                preds = preds.transpose(1, 0).contiguous().view(-1)
+                sim_preds = self.converter.decode(preds.data, preds_size.data, raw=False)
+
+                for pred, target in zip(sim_preds, target):
+                    if pred.strip() == target.strip():
+                        correct += 1
+
+            # =================================================================================
+            for batch_idx, (data, target) in enumerate(self.train_loader_5):              # 训练
+
+                if self.use_unicode:
+                    target = [tx for tx in target]
+
+                batch_size = data.size(0)
+                utils.loadData(image, data)
+                t, l = self.converter.encode(target)
+                utils.loadData(text, t)
+                utils.loadData(length, l)
+
+                if self.use_gpu:
+                    image = image.cuda()
+
+                # 梯度清0
+                self.optimizer.zero_grad()
+                for p in self.model.parameters():
+                    p.requires_grad = True
+
+                # 计算损失
+                preds = self.model(image)               # image size: [64, 3, 32, 270]  (char num 10)
+                preds_size = Variable(torch.IntTensor([preds.size(0)] * batch_size))
+                loss = self.criterion(preds, text, preds_size, length)
+                # 反向传播计算梯度
+                loss.backward()
+                # 更新参数
+                self.optimizer.step()
+                train_loss += loss.item()
+
+                _, preds = preds.max(2)
+                preds = preds.transpose(1, 0).contiguous().view(-1)
+                sim_preds = self.converter.decode(preds.data, preds_size.data, raw=False)
+
+                for pred, target in zip(sim_preds, target):
+                    if pred.strip() == target.strip():
+                        correct += 1
+
+            # =================================================================================
+            train_loss /= (len(self.train_loader_1) + len(self.train_loader_3) + len(self.train_loader_5))
+            acc = float(correct) / float(len(self.train_loader_1.dataset) + len(self.train_loader_3.dataset) + len(self.train_loader_5.dataset))
             use_time = time.time() - start_time
             print('[Train] Epoch: {} \tLoss: {:.6f}\tAcc: {:.6f}\tlr: {}\ttime: {}'.format(epoch_i, train_loss, acc, self.lr, use_time))
 
@@ -226,7 +326,8 @@ class ModuleTrain:
 
         time_start = time.time()
         self.model.eval()
-        for data, target in self.test_loader:
+        # =================================================================================
+        for data, target in self.test_loader_1:
             cpu_images = data
             cpu_texts = target
             batch_size = cpu_images.size(0)
@@ -270,10 +371,71 @@ class ModuleTrain:
                 #     print(pred.strip())
                 #     print(target.strip())
 
+        # =================================================================================
+        for data, target in self.test_loader_3:
+            cpu_images = data
+            cpu_texts = target
+            batch_size = cpu_images.size(0)
+            utils.loadData(image, cpu_images)
+            if self.use_unicode:
+                cpu_texts = [tx for tx in cpu_texts]
+
+            t, l = self.converter.encode(cpu_texts)
+            utils.loadData(text, t)
+            utils.loadData(length, l)
+
+            if self.use_gpu:
+                image = image.cuda()
+
+            preds = self.model(image)
+            preds_size = Variable(torch.IntTensor([preds.size(0)] * batch_size))
+            loss = self.criterion(preds, text, preds_size, length)
+            test_loss += loss.item()
+
+            _, preds = preds.max(2)
+            # preds = preds.squeeze(2)
+            preds = preds.transpose(1, 0).contiguous().view(-1)
+            sim_preds = self.converter.decode(preds.data, preds_size.data, raw=False)
+
+            for pred, target in zip(sim_preds, cpu_texts):
+                if pred.strip() == target.strip():
+                    correct += 1
+
+        # =================================================================================
+        for data, target in self.test_loader_5:
+            cpu_images = data
+            cpu_texts = target
+            batch_size = cpu_images.size(0)
+            utils.loadData(image, cpu_images)
+            if self.use_unicode:
+                cpu_texts = [tx for tx in cpu_texts]
+
+            t, l = self.converter.encode(cpu_texts)
+            utils.loadData(text, t)
+            utils.loadData(length, l)
+
+            if self.use_gpu:
+                image = image.cuda()
+
+            preds = self.model(image)
+            preds_size = Variable(torch.IntTensor([preds.size(0)] * batch_size))
+            loss = self.criterion(preds, text, preds_size, length)
+            test_loss += loss.item()
+
+            _, preds = preds.max(2)
+            # preds = preds.squeeze(2)
+            preds = preds.transpose(1, 0).contiguous().view(-1)
+            sim_preds = self.converter.decode(preds.data, preds_size.data, raw=False)
+
+            for pred, target in zip(sim_preds, cpu_texts):
+                if pred.strip() == target.strip():
+                    correct += 1
+
+        # =================================================================================
         time_end = time.time()
-        time_avg = float(time_end - time_start) / float(len(self.test_loader.dataset))
-        accuracy = correct / float(len(self.test_loader.dataset))
-        test_loss /= len(self.test_loader)
+        time_avg = float(time_end - time_start) / float(len(self.test_loader_1.dataset + self.test_loader_3.dataset + self.test_loader_5.dataset))
+        accuracy = correct / float(len(self.test_loader_1.dataset + self.test_loader_3.dataset + self.test_loader_5.dataset))
+        test_loss /= len(self.test_loader_1 + self.test_loader_3 + self.test_loader_5)
         print('[Test] loss: %f, accuray: %f, time: %f' % (test_loss, accuracy, time_avg))
         return test_loss, accuracy
 
