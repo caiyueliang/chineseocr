@@ -82,12 +82,14 @@ def crnnRec(im, boxes, leftAdjust=False, rightAdjust=False, alph=0.2, f=1.0):
 
         # 按照box大小，裁剪图片
         partImg, newW, newH = rotate_cut_img(im, degree, box, w, h, leftAdjust, rightAdjust, alph)
-        # image_cv = cv2.cvtColor(numpy.asarray(partImg), cv2.COLOR_RGB2BGR)
-        # cv2.imshow("crnnRec", image_cv)
+        image_cv = cv2.cvtColor(numpy.asarray(partImg), cv2.COLOR_RGB2BGR)
+        cv2.imshow("crnnRec", image_cv)
         # cv2.waitKey(0)
 
         # 图片会转灰度图，进行识别
-        text = crnnOcr(partImg.convert('L'))
+        # print('crnnRec', partImg.size)
+        # text = crnnOcr(partImg.convert('L'))
+        text = crnnOcr(partImg)
         if text.strip() != u'':
             results.append({'cx': cx*f, 'cy': cy*f, 'text': text, 'w': newW*f, 'h': newH*f, 'degree': degree*180.0/np.pi})
  
@@ -151,6 +153,7 @@ def model(img, file_name, detectAngle=False, config={}, leftAdjust=False, rightA
     print('newBox', newBox)
     draw_boxes(image_cv, text_recs, file_name, (255, 0, 0), "./output")
 
+    # print('model', img.shape)
     result = crnnRec(np.array(img), newBox, leftAdjust, rightAdjust, alpha, 1.0 / f)  # ocr识别
     print('result', result)
 
