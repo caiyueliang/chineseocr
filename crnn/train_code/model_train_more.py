@@ -199,6 +199,10 @@ class ModuleTrain:
                     if pred.strip() == target.strip():
                         correct += 1
 
+            tmp_loss = train_loss / (len(self.train_loader_1))
+            acc = float(correct) / float(len(self.train_loader_1.dataset))
+            print('[Train] Epoch: {} \tLoss: {:.6f}\tAcc: {:.6f}\tlr: {}'.format(epoch_i, tmp_loss, acc, self.lr))
+
             # =================================================================================
             for batch_idx, (data, target) in enumerate(self.train_loader_3):              # 训练
 
@@ -236,6 +240,10 @@ class ModuleTrain:
                 for pred, target in zip(sim_preds, target):
                     if pred.strip() == target.strip():
                         correct += 1
+
+            tmp_loss = train_loss / (len(self.train_loader_1) + len(self.train_loader_3))
+            acc = float(correct) / float(len(self.train_loader_1.dataset) + len(self.train_loader_3.dataset))
+            print('[Train] Epoch: {} \tLoss: {:.6f}\tAcc: {:.6f}\tlr: {}'.format(epoch_i, tmp_loss, acc, self.lr))
 
             # =================================================================================
             for batch_idx, (data, target) in enumerate(self.train_loader_5):              # 训练
@@ -371,6 +379,10 @@ class ModuleTrain:
                 #     print(pred.strip())
                 #     print(target.strip())
 
+        accuracy = correct / float(len(self.test_loader_1.dataset))
+        temp_loss = test_loss / len(self.test_loader_1)
+        print('[Test] loss: %f, accuray: %f' % (temp_loss, accuracy))
+
         # =================================================================================
         for data, target in self.test_loader_3:
             cpu_images = data
@@ -400,6 +412,10 @@ class ModuleTrain:
             for pred, target in zip(sim_preds, cpu_texts):
                 if pred.strip() == target.strip():
                     correct += 1
+
+        accuracy = correct / float(len(self.test_loader_1.dataset) + len(self.test_loader_3.dataset))
+        temp_loss = test_loss / (len(self.test_loader_1) + len(self.test_loader_3))
+        print('[Test] loss: %f, accuray: %f' % (temp_loss, accuracy))
 
         # =================================================================================
         for data, target in self.test_loader_5:
@@ -433,9 +449,9 @@ class ModuleTrain:
 
         # =================================================================================
         time_end = time.time()
-        time_avg = float(time_end - time_start) / float(len(self.test_loader_1.dataset + self.test_loader_3.dataset + self.test_loader_5.dataset))
-        accuracy = correct / float(len(self.test_loader_1.dataset + self.test_loader_3.dataset + self.test_loader_5.dataset))
-        test_loss /= len(self.test_loader_1 + self.test_loader_3 + self.test_loader_5)
+        time_avg = float(time_end - time_start) / float(len(self.test_loader_1.dataset) + len(self.test_loader_3.dataset) + len(self.test_loader_5.dataset))
+        accuracy = correct / float(len(self.test_loader_1.dataset) + len(self.test_loader_3.dataset) + len(self.test_loader_5.dataset))
+        test_loss /= (len(self.test_loader_1) + len(self.test_loader_3) + len(self.test_loader_5))
         print('[Test] loss: %f, accuray: %f, time: %f' % (test_loss, accuracy, time_avg))
         return test_loss, accuracy
 
