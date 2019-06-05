@@ -28,8 +28,8 @@ def parse_argvs():
     parser.add_argument('--beta1', type=float, default=0.9, help='beta1 for adam. default=0.5')
     parser.add_argument('--cuda', action='store_true', help='enables cuda')
     parser.add_argument('--ngpu', type=int, default=1, help='number of GPUs to use')
-    # parser.add_argument('--n_channels', type=int, default=3, help='image channels')
-    parser.add_argument('--n_channels', type=int, default=1, help='image channels')
+    parser.add_argument('--n_channels', type=int, default=3, help='image channels')
+    # parser.add_argument('--n_channels', type=int, default=1, help='image channels')
 
     parser.add_argument('--fine_tuning', type=bool, default=False, help='fine_tuning')
     parser.add_argument('--old_class_num', type=int, default=3564, help='input batch size')
