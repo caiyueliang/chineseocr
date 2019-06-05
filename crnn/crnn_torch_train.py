@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
     model_train = new_mt.ModuleTrain(train_path=opt.train_root, test_path=opt.val_root, num_class_new=num_class_new,
                                      fine_tuning=opt.fine_tuning, model_file=out_put_model_file, model=model, alphabet=opt.alphabet,
-                                     img_h=opt.img_h, img_w=opt.img_w, batch_size=opt.batch_size, lr=opt.lr)
+                                     img_h=opt.img_h, img_w=opt.img_w, batch_size=opt.batch_size, lr=opt.lr, nc=nc)
 
     model_train.train(120, 80)
     model_train.test()

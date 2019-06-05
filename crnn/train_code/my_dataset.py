@@ -13,12 +13,13 @@ import cv2
 
 
 class MyDataset(Dataset):
-    def __init__(self, root=None, transform=None, target_transform=None, is_train=False, img_h=110, img_w=32):
+    def __init__(self, root=None, transform=None, target_transform=None, is_train=False, img_h=110, img_w=32, nc=3):
         self.root = root
         self.sample_list = list()
         self.is_train = is_train
         self.img_h = img_h
         self.img_w = img_w
+        self.nc = nc
 
         for root, dirs, files in os.walk(self.root):
             for file in files:
@@ -49,7 +50,9 @@ class MyDataset(Dataset):
         # print("image_path", image_path)
         # print("label", label)
         img = Image.open(image_path)
-        img = img.convert('L')                  # 转灰度图
+
+        if self.nc == 1:                            # 通道数为1，图片转灰度图
+            img = img.convert('L')                  # 转灰度图
 
         if self.is_train is True:
             img = self.random_gaussian(img)

@@ -16,7 +16,7 @@ import time
 class ModuleTrain:
     def __init__(self, train_path, test_path, model_file, model, num_class_new, alphabet,
                  fine_tuning=False, img_h=32, img_w=110, batch_size=64, lr=1e-3,
-                 use_unicode=True, best_loss=10, use_gpu=True, workers=1):
+                 use_unicode=True, best_loss=10, use_gpu=True, workers=1, nc=3):
         self.model = model
         self.model_file = model_file
         self.use_unicode = use_unicode
@@ -54,12 +54,12 @@ class ModuleTrain:
 
         # train_label = os.path.join(train_path, 'labels_normal.txt')
         train_dataset = my_dataset.MyDataset(root=train_path, transform=self.transform,
-                                             is_train=True, img_h=self.img_h, img_w=self.img_w)
+                                             is_train=True, img_h=self.img_h, img_w=self.img_w, nc=nc)
         self.train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=self.batch_size,
                                                         shuffle=True, num_workers=int(self.workers))
         # test_label = os.path.join(test_path, 'labels_normal.txt')
         test_dataset = my_dataset.MyDataset(root=test_path, transform=self.transform,
-                                            is_train=False, img_h=self.img_h, img_w=self.img_w)
+                                            is_train=False, img_h=self.img_h, img_w=self.img_w, nc=nc)
         self.test_loader = torch.utils.data.DataLoader(dataset=test_dataset, batch_size=self.batch_size,
                                                        shuffle=False, num_workers=int(self.workers))
 
