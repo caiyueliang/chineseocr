@@ -49,6 +49,7 @@ class MyDataset(Dataset):
         # print("image_path", image_path)
         # print("label", label)
         img = Image.open(image_path)
+        img = img.convert('L')                  # 转灰度图
 
         if self.is_train is True:
             img = self.random_gaussian(img)

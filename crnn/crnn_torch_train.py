@@ -9,8 +9,8 @@ from train_code import model_train_new as new_mt
 
 def parse_argvs():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_root', help='path to dataset', default='../../Data/OCR_3500/train')
-    parser.add_argument('--val_root', help='path to dataset', default='../../Data/OCR_3500/test')
+    parser.add_argument('--train_root', help='path to dataset', default='../../Data/OCR_3500_2/train')
+    parser.add_argument('--val_root', help='path to dataset', default='../../Data/OCR_3500_2/test')
     parser.add_argument('--model', help='model to train', default='CRNN')
 
     parser.add_argument('--workers', type=int, help='number of data loading workers', default=1)
@@ -18,15 +18,16 @@ def parse_argvs():
     # parser.add_argument('--imgH', type=int, default=32, help='the height of the input image to network')
     # parser.add_argument('--imgW', type=int, default=256, help='the width of the input image to network')
     parser.add_argument('--img_h', type=int, default=32, help='the height of the input image to network')
-    # parser.add_argument('--img_w', type=int, default=58, help='the width of the input image to network')
-    parser.add_argument('--img_w', type=int, default=270, help='the width of the input image to network')
+    parser.add_argument('--img_w', type=int, default=58, help='the width of the input image to network')
+    # parser.add_argument('--img_w', type=int, default=270, help='the width of the input image to network')
     parser.add_argument('--nh', type=int, default=256, help='size of the lstm hidden state')
     parser.add_argument('--niter', type=int, default=100, help='number of epochs to train for')
     parser.add_argument('--lr', type=float, default=0.0001, help='learning rate for Critic, default=0.001')
     parser.add_argument('--beta1', type=float, default=0.9, help='beta1 for adam. default=0.5')
     parser.add_argument('--cuda', action='store_true', help='enables cuda')
     parser.add_argument('--ngpu', type=int, default=1, help='number of GPUs to use')
-    parser.add_argument('--n_channels', type=int, default=3, help='image channels')
+    # parser.add_argument('--n_channels', type=int, default=3, help='image channels')
+    parser.add_argument('--n_channels', type=int, default=1, help='image channels')
 
     parser.add_argument('--fine_tuning', type=bool, default=False, help='fine_tuning')
     parser.add_argument('--old_class_num', type=int, default=3564, help='input batch size')
