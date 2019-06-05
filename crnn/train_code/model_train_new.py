@@ -46,11 +46,18 @@ class ModuleTrain:
         else:
             print('[Load model] error !!!')
 
-        self.transform = T.Compose([
-            T.Resize((self.img_h, self.img_w)),
-            T.ToTensor(),
-            T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
-        ])
+        if nc == 1:
+            self.transform = T.Compose([
+                T.Resize((self.img_h, self.img_w)),
+                T.ToTensor(),
+                T.Normalize(mean=[.5], std=[.5])
+            ])
+        else:
+            self.transform = T.Compose([
+                T.Resize((self.img_h, self.img_w)),
+                T.ToTensor(),
+                T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
+            ])
 
         # train_label = os.path.join(train_path, 'labels_normal.txt')
         train_dataset = my_dataset.MyDataset(root=train_path, transform=self.transform,
