@@ -10,7 +10,7 @@ from train_code import model_train_more as more_mt
 
 def parse_argvs():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_mode', type=int, help='mode', default=1)
+    parser.add_argument('--train_mode', type=int, help='mode', default=0)
     parser.add_argument('--train_root', help='path to dataset', default='../../Data/OCR_3500/train')
     parser.add_argument('--val_root', help='path to dataset', default='../../Data/OCR_3500/test')
     parser.add_argument('--model', help='model to train', default='CRNN')
@@ -20,8 +20,8 @@ def parse_argvs():
     # parser.add_argument('--imgH', type=int, default=32, help='the height of the input image to network')
     # parser.add_argument('--imgW', type=int, default=256, help='the width of the input image to network')
     parser.add_argument('--img_h', type=int, default=32, help='the height of the input image to network')
-    parser.add_argument('--img_w', type=int, default=58, help='the width of the input image to network')
-    # parser.add_argument('--img_w', type=int, default=270, help='the width of the input image to network')
+    # parser.add_argument('--img_w', type=int, default=58, help='the width of the input image to network')
+    parser.add_argument('--img_w', type=int, default=300, help='the width of the input image to network')
     parser.add_argument('--nh', type=int, default=256, help='size of the lstm hidden state')
     parser.add_argument('--niter', type=int, default=100, help='number of epochs to train for')
     parser.add_argument('--lr', type=float, default=0.0001, help='learning rate for Critic, default=0.001')
