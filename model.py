@@ -123,9 +123,10 @@ def crnnRec(im, boxes, leftAdjust=False, rightAdjust=False, alph=0.2, f=1.0, sav
 
         # 图片会转灰度图，进行识别
         # print('crnnRec', partImg.size)
-        text = crnnOcr(partImg.convert('L'))
+        text, w = crnnOcr(partImg.convert('L'))
         if save:
-            save_image(partImg, text)
+            image = partImg.resize((w, 32), Image.BILINEAR)
+            save_image(image, text)
 
         # text = crnnOcr(partImg)
         if text.strip() != u'':

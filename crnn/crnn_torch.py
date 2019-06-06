@@ -18,8 +18,8 @@ def crnnSource():
     加载模型
     """
     if chinsesModel:
-        # alphabet = keys.alphabetChinese             # 中英文模型
-        alphabet = keys.alphabetChinese_3564        # 中英文模型
+        alphabet = keys.alphabetChinese             # 中英文模型
+        # alphabet = keys.alphabetChinese_3564        # 中英文模型
     else:
         alphabet = keys.alphabetEnglish             # 英文模型
         
@@ -129,4 +129,4 @@ def crnnOcr(image):
     print('sim_pred', sim_pred)
 
     cv2.waitKey(0)
-    return sim_pred
+    return sim_pred, w
