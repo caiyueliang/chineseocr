@@ -33,10 +33,10 @@ def crnnSource():
     else:
         model = CRNN(32, 1, len(alphabet)+1, 256, 1, lstmFlag=LSTMFLAG).cpu()
 
-    trainWeights = torch.load(ocrModel,map_location=lambda storage, loc: storage)
+    trainWeights = torch.load(ocrModel, map_location=lambda storage, loc: storage)
     modelWeights = OrderedDict()
     for k, v in trainWeights.items():
-        name = k.replace('module.','') # remove `module.`
+        name = k.replace('module.', '') # remove `module.`
         modelWeights[name] = v
     # load params
   
