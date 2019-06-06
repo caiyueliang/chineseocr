@@ -23,11 +23,15 @@ def crnnSource():
         alphabet = keys.alphabetEnglish             # 英文模型
         
     converter = strLabelConverter(alphabet)
+    # if torch.cuda.is_available() and GPU:
+    #     model = CRNN(32, 3, len(alphabet)+1, 256, 1, lstmFlag=LSTMFLAG).cuda()      # LSTMFLAG=True crnn 否则 dense ocr
+    # else:
+    #     model = CRNN(32, 3, len(alphabet)+1, 256, 1, lstmFlag=LSTMFLAG).cpu()
     if torch.cuda.is_available() and GPU:
-        model = CRNN(32, 3, len(alphabet)+1, 256, 1, lstmFlag=LSTMFLAG).cuda()      # LSTMFLAG=True crnn 否则 dense ocr
+        model = CRNN(32, 1, len(alphabet)+1, 256, 1, lstmFlag=LSTMFLAG).cuda()      # LSTMFLAG=True crnn 否则 dense ocr
     else:
-        model = CRNN(32, 3, len(alphabet)+1, 256, 1, lstmFlag=LSTMFLAG).cpu()
-    
+        model = CRNN(32, 1, len(alphabet)+1, 256, 1, lstmFlag=LSTMFLAG).cpu()
+
     trainWeights = torch.load(ocrModel,map_location=lambda storage, loc: storage)
     modelWeights = OrderedDict()
     for k, v in trainWeights.items():
@@ -97,20 +101,22 @@ def crnnOcr(image):
     scale = image.size[1] * 1.0 / 32
     w = image.size[0] / scale
     w = int(w)
-    transformer = resizeNormalize((w, 32))
-    image = transformer(image)
-    image = image.astype(np.float32)
-    image = torch.from_numpy(image)
+    # transformer = resizeNormalize((w, 32))
+    # image = transformer(image)
+    # image = image.astype(np.float32)
+    # image = torch.from_numpy(image)
+    image = image.resize((w, 32), Image.BILINEAR)
+    image = transform(image)
 
-    image_cv = cv2.cvtColor(np.asarray(image), cv2.COLOR_GRAY2RGB)
-    cv2.imshow("crnnOcr", image_cv)
+    # image_cv = cv2.cvtColor(np.asarray(image), cv2.COLOR_GRAY2RGB)
+    # cv2.imshow("crnnOcr", image_cv)
 
     if torch.cuda.is_available() and GPU:
         image = image.cuda()
     else:
         image = image.cpu()
 
-    image = image.view(1, 1, *image.size())
+    image = image.view(1, *image.size())
     print(image.size())
 
     image = Variable(image)
@@ -118,6 +124,7 @@ def crnnOcr(image):
     _, preds = preds.max(2)
     preds = preds.transpose(1, 0).contiguous().view(-1)
     sim_pred = converter.decode(preds)
+    print('sim_pred', sim_pred)
 
     cv2.waitKey(0)
     return sim_pred
