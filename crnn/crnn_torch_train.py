@@ -77,6 +77,6 @@ if __name__ == '__main__':
                                           fine_tuning=opt.fine_tuning, model_file=out_put_model_file, model=model, alphabet=opt.alphabet,
                                           img_h=opt.img_h, img_w=opt.img_w, batch_size=opt.batch_size, lr=opt.lr, nc=nc)
 
-    model_train.train(120, 80)
+    model_train.train(300, 240)
     model_train.test()
 
