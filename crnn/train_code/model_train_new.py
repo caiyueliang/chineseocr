@@ -50,13 +50,13 @@ class ModuleTrain:
             self.transform = T.Compose([
                 T.Resize((self.img_h, self.img_w)),
                 T.ToTensor(),
-                T.Normalize(mean=[.5], std=[.5])
+                # T.Normalize(mean=[.5], std=[.5])
             ])
         else:
             self.transform = T.Compose([
                 T.Resize((self.img_h, self.img_w)),
                 T.ToTensor(),
-                T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
+                # T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
             ])
 
         # train_label = os.path.join(train_path, 'labels_normal.txt')

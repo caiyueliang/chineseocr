@@ -54,8 +54,11 @@ class MyDataset(Dataset):
         if self.nc == 1:                            # 通道数为1，图片转灰度图
             img = img.convert('L')                  # 转灰度图
 
+        # img_1 = cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
+        # cv2.imshow("old", img_1)
+
         if self.is_train is True:
-            img = self.random_gaussian(img)
+            # img = self.random_gaussian(img)
             # img = self.random_bright(img)
             img = self.random_crop(img)
 
@@ -77,7 +80,7 @@ class MyDataset(Dataset):
 
         k = random.random()
         if k > 0.5:
-            img = img.filter(ImageFilter.GaussianBlur(radius=1.5))
+            img = img.filter(ImageFilter.GaussianBlur(radius=1.2))
             # img = cv2.GaussianBlur(img, ksize=(k, k), sigmaX=1.5)
 
         # img_2 = cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
@@ -91,10 +94,10 @@ class MyDataset(Dataset):
         # img_1 = cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
         # cv2.imshow("old", img_1)
 
-        top = random.randint(0, max_n)
+        top = random.randint(0, max_n*2)
         bottom = random.randint(0, max_n)
         left = random.randint(0, max_n)
-        right = random.randint(0, max_n)
+        right = random.randint(0, 2)
         # print top, bottom, left, right
 
         # (left, upper, right, lower)
@@ -114,7 +117,7 @@ class MyDataset(Dataset):
     # 随机调亮(opencv)
     def random_bright(self, im, delta=16):
         alpha = random.random()
-        if alpha > 0.2:
+        if alpha > 0.6:
             im = cv2.cvtColor(np.asarray(im), cv2.COLOR_RGB2BGR)
             im = im * alpha + random.randrange(-delta, delta)
             im = im.clip(min=0, max=255).astype(np.uint8)
