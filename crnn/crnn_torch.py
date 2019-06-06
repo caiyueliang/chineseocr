@@ -18,7 +18,8 @@ def crnnSource():
     加载模型
     """
     if chinsesModel:
-        alphabet = keys.alphabetChinese_3564        # 中英文模型
+        alphabet = keys.alphabetChinese             # 中英文模型
+        # alphabet = keys.alphabetChinese_3564        # 中英文模型
     else:
         alphabet = keys.alphabetEnglish             # 英文模型
         
