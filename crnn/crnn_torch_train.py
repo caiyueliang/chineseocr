@@ -10,7 +10,7 @@ from train_code import model_train_more as more_mt
 
 def parse_argvs():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_mode', type=int, help='mode', default=0)
+    parser.add_argument('--train_mode', type=int, help='mode', default=1)
     parser.add_argument('--train_root', help='path to dataset', default='../../Data/OCR_3500/train')
     parser.add_argument('--val_root', help='path to dataset', default='../../Data/OCR_3500/test')
     parser.add_argument('--model', help='model to train', default='CRNN')

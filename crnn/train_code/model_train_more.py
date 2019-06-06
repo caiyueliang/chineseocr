@@ -47,48 +47,63 @@ class ModuleTrain:
             print('[Load model] error !!!')
 
         # =================================================================================================
-        self.transform_1 = T.Compose([
-            T.Resize((self.img_h, 270)),
+        self.transform_200 = T.Compose([
+            T.Resize((self.img_h, 200)),
             T.ToTensor(),
-            T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
+            # T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
         ])
-        train_dataset_1 = my_dataset.MyDataset(root=os.path.join(train_path, 'black_1'), transform=self.transform_1,
+        train_dataset_200 = my_dataset.MyDataset(root=os.path.join(train_path, '200'), transform=self.transform_200,
                                                is_train=True, img_h=self.img_h, img_w=self.img_w, nc=nc)
-        self.train_loader_1 = torch.utils.data.DataLoader(dataset=train_dataset_1, batch_size=self.batch_size,
+        self.train_loader_200 = torch.utils.data.DataLoader(dataset=train_dataset_200, batch_size=self.batch_size,
                                                           shuffle=True, num_workers=int(self.workers))
-        test_dataset_1 = my_dataset.MyDataset(root=os.path.join(test_path, 'black_1'), transform=self.transform_1,
+        test_dataset_200 = my_dataset.MyDataset(root=os.path.join(test_path, '200'), transform=self.transform_200,
                                               is_train=False, img_h=self.img_h, img_w=self.img_w, nc=nc)
-        self.test_loader_1 = torch.utils.data.DataLoader(dataset=test_dataset_1, batch_size=self.batch_size,
+        self.test_loader_200 = torch.utils.data.DataLoader(dataset=test_dataset_200, batch_size=self.batch_size,
                                                          shuffle=False, num_workers=int(self.workers))
 
         # =================================================================================================
-        self.transform_3 = T.Compose([
+        self.transform_300 = T.Compose([
             T.Resize((self.img_h, 300)),
             T.ToTensor(),
-            T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
+            # T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
         ])
-        train_dataset_3 = my_dataset.MyDataset(root=os.path.join(train_path, 'black_3'), transform=self.transform_3,
+        train_dataset_300 = my_dataset.MyDataset(root=os.path.join(train_path, '300'), transform=self.transform_300,
                                                is_train=True, img_h=self.img_h, img_w=self.img_w, nc=nc)
-        self.train_loader_3 = torch.utils.data.DataLoader(dataset=train_dataset_3, batch_size=self.batch_size,
+        self.train_loader_300 = torch.utils.data.DataLoader(dataset=train_dataset_300, batch_size=self.batch_size,
                                                           shuffle=True, num_workers=int(self.workers))
-        test_dataset_3 = my_dataset.MyDataset(root=os.path.join(test_path, 'black_3'), transform=self.transform_3,
+        test_dataset_300 = my_dataset.MyDataset(root=os.path.join(test_path, '300'), transform=self.transform_300,
                                               is_train=False, img_h=self.img_h, img_w=self.img_w, nc=nc)
-        self.test_loader_3 = torch.utils.data.DataLoader(dataset=test_dataset_3, batch_size=self.batch_size,
+        self.test_loader_300 = torch.utils.data.DataLoader(dataset=test_dataset_300, batch_size=self.batch_size,
                                                          shuffle=False, num_workers=int(self.workers))
 
         # =================================================================================================
-        self.transform_5 = T.Compose([
-            T.Resize((self.img_h, 380)),
+        self.transform_400 = T.Compose([
+            T.Resize((self.img_h, 400)),
             T.ToTensor(),
-            T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
+            # T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
         ])
-        train_dataset_5 = my_dataset.MyDataset(root=os.path.join(train_path, 'black_5'), transform=self.transform_5,
+        train_dataset_400 = my_dataset.MyDataset(root=os.path.join(train_path, '400'), transform=self.transform_400,
                                                is_train=True, img_h=self.img_h, img_w=self.img_w, nc=nc)
-        self.train_loader_5 = torch.utils.data.DataLoader(dataset=train_dataset_5, batch_size=self.batch_size,
+        self.train_loader_400 = torch.utils.data.DataLoader(dataset=train_dataset_400, batch_size=self.batch_size,
                                                           shuffle=True, num_workers=int(self.workers))
-        test_dataset_5 = my_dataset.MyDataset(root=os.path.join(test_path, 'black_5'), transform=self.transform_5,
+        test_dataset_400 = my_dataset.MyDataset(root=os.path.join(test_path, '400'), transform=self.transform_400,
                                               is_train=False, img_h=self.img_h, img_w=self.img_w, nc=nc)
-        self.test_loader_5 = torch.utils.data.DataLoader(dataset=test_dataset_5, batch_size=self.batch_size,
+        self.test_loader_400 = torch.utils.data.DataLoader(dataset=test_dataset_400, batch_size=self.batch_size,
+                                                         shuffle=False, num_workers=int(self.workers))
+
+        # =================================================================================================
+        self.transform_600 = T.Compose([
+            T.Resize((self.img_h, 600)),
+            T.ToTensor(),
+            # T.Normalize(mean=[.5, .5, .5], std=[.5, .5, .5])
+        ])
+        train_dataset_600 = my_dataset.MyDataset(root=os.path.join(train_path, '600'), transform=self.transform_600,
+                                               is_train=True, img_h=self.img_h, img_w=self.img_w, nc=nc)
+        self.train_loader_600 = torch.utils.data.DataLoader(dataset=train_dataset_600, batch_size=self.batch_size,
+                                                          shuffle=True, num_workers=int(self.workers))
+        test_dataset_600 = my_dataset.MyDataset(root=os.path.join(test_path, '600'), transform=self.transform_600,
+                                              is_train=False, img_h=self.img_h, img_w=self.img_w, nc=nc)
+        self.test_loader_600 = torch.utils.data.DataLoader(dataset=test_dataset_600, batch_size=self.batch_size,
                                                          shuffle=False, num_workers=int(self.workers))
 
         # =================================================================================================
@@ -127,7 +142,7 @@ class ModuleTrain:
             print('================================================')
             self.model.train()
             # =================================================================================
-            for batch_idx, (data, target) in enumerate(self.train_loader_1):              # 训练
+            for batch_idx, (data, target) in enumerate(self.train_loader_200):              # 训练
                 # data, target = Variable(data), Variable(target)
 
                 if self.use_unicode:
@@ -199,12 +214,12 @@ class ModuleTrain:
                     if pred.strip() == target.strip():
                         correct += 1
 
-            tmp_loss = train_loss / (len(self.train_loader_1))
-            acc = float(correct) / float(len(self.train_loader_1.dataset))
+            tmp_loss = train_loss / (len(self.train_loader_200))
+            acc = float(correct) / float(len(self.train_loader_200.dataset))
             print('[Train] Epoch: {} \tLoss: {:.6f}\tAcc: {:.6f}\tlr: {}'.format(epoch_i, tmp_loss, acc, self.lr))
 
             # =================================================================================
-            for batch_idx, (data, target) in enumerate(self.train_loader_3):              # 训练
+            for batch_idx, (data, target) in enumerate(self.train_loader_300):              # 训练
 
                 if self.use_unicode:
                     target = [tx for tx in target]
@@ -241,12 +256,54 @@ class ModuleTrain:
                     if pred.strip() == target.strip():
                         correct += 1
 
-            tmp_loss = train_loss / (len(self.train_loader_1) + len(self.train_loader_3))
-            acc = float(correct) / float(len(self.train_loader_1.dataset) + len(self.train_loader_3.dataset))
+            tmp_loss = train_loss / (len(self.train_loader_200) + len(self.train_loader_300))
+            acc = float(correct) / float(len(self.train_loader_200.dataset) + len(self.train_loader_300.dataset))
             print('[Train] Epoch: {} \tLoss: {:.6f}\tAcc: {:.6f}\tlr: {}'.format(epoch_i, tmp_loss, acc, self.lr))
 
             # =================================================================================
-            for batch_idx, (data, target) in enumerate(self.train_loader_5):              # 训练
+            for batch_idx, (data, target) in enumerate(self.train_loader_400):              # 训练
+
+                if self.use_unicode:
+                    target = [tx for tx in target]
+
+                batch_size = data.size(0)
+                utils.loadData(image, data)
+                t, l = self.converter.encode(target)
+                utils.loadData(text, t)
+                utils.loadData(length, l)
+
+                if self.use_gpu:
+                    image = image.cuda()
+
+                # 梯度清0
+                self.optimizer.zero_grad()
+                for p in self.model.parameters():
+                    p.requires_grad = True
+
+                # 计算损失
+                preds = self.model(image)               # image size: [64, 3, 32, 270]  (char num 10)
+                preds_size = Variable(torch.IntTensor([preds.size(0)] * batch_size))
+                loss = self.criterion(preds, text, preds_size, length)
+                # 反向传播计算梯度
+                loss.backward()
+                # 更新参数
+                self.optimizer.step()
+                train_loss += loss.item()
+
+                _, preds = preds.max(2)
+                preds = preds.transpose(1, 0).contiguous().view(-1)
+                sim_preds = self.converter.decode(preds.data, preds_size.data, raw=False)
+
+                for pred, target in zip(sim_preds, target):
+                    if pred.strip() == target.strip():
+                        correct += 1
+
+            tmp_loss = train_loss / (len(self.train_loader_200) + len(self.train_loader_300) + len(self.train_loader_400))
+            acc = float(correct) / float(len(self.train_loader_200.dataset) + len(self.train_loader_300.dataset) + + len(self.train_loader_400.dataset))
+            print('[Train] Epoch: {} \tLoss: {:.6f}\tAcc: {:.6f}\tlr: {}'.format(epoch_i, tmp_loss, acc, self.lr))
+
+            # =================================================================================
+            for batch_idx, (data, target) in enumerate(self.train_loader_600):              # 训练
 
                 if self.use_unicode:
                     target = [tx for tx in target]
@@ -284,8 +341,14 @@ class ModuleTrain:
                         correct += 1
 
             # =================================================================================
-            train_loss /= (len(self.train_loader_1) + len(self.train_loader_3) + len(self.train_loader_5))
-            acc = float(correct) / float(len(self.train_loader_1.dataset) + len(self.train_loader_3.dataset) + len(self.train_loader_5.dataset))
+            train_loss /= (len(self.train_loader_200) +
+                           len(self.train_loader_300) +
+                           len(self.train_loader_400) +
+                           len(self.train_loader_600))
+            acc = float(correct) / float(len(self.train_loader_200.dataset) +
+                                         len(self.train_loader_300.dataset) +
+                                         len(self.train_loader_400.dataset) +
+                                         len(self.train_loader_600.dataset))
             use_time = time.time() - start_time
             print('[Train] Epoch: {} \tLoss: {:.6f}\tAcc: {:.6f}\tlr: {}\ttime: {}'.format(epoch_i, train_loss, acc, self.lr, use_time))
 
@@ -335,7 +398,7 @@ class ModuleTrain:
         time_start = time.time()
         self.model.eval()
         # =================================================================================
-        for data, target in self.test_loader_1:
+        for data, target in self.test_loader_200:
             cpu_images = data
             cpu_texts = target
             batch_size = cpu_images.size(0)
@@ -379,12 +442,12 @@ class ModuleTrain:
                 #     print(pred.strip())
                 #     print(target.strip())
 
-        accuracy = correct / float(len(self.test_loader_1.dataset))
-        temp_loss = test_loss / len(self.test_loader_1)
+        accuracy = correct / float(len(self.test_loader_200.dataset))
+        temp_loss = test_loss / len(self.test_loader_200)
         print('[Test] loss: %f, accuray: %f' % (temp_loss, accuracy))
 
         # =================================================================================
-        for data, target in self.test_loader_3:
+        for data, target in self.test_loader_300:
             cpu_images = data
             cpu_texts = target
             batch_size = cpu_images.size(0)
@@ -413,12 +476,50 @@ class ModuleTrain:
                 if pred.strip() == target.strip():
                     correct += 1
 
-        accuracy = correct / float(len(self.test_loader_1.dataset) + len(self.test_loader_3.dataset))
-        temp_loss = test_loss / (len(self.test_loader_1) + len(self.test_loader_3))
+        accuracy = correct / float(len(self.test_loader_200.dataset) + len(self.test_loader_300.dataset))
+        temp_loss = test_loss / (len(self.test_loader_200) + len(self.test_loader_300))
         print('[Test] loss: %f, accuray: %f' % (temp_loss, accuracy))
 
         # =================================================================================
-        for data, target in self.test_loader_5:
+        for data, target in self.test_loader_400:
+            cpu_images = data
+            cpu_texts = target
+            batch_size = cpu_images.size(0)
+            utils.loadData(image, cpu_images)
+            if self.use_unicode:
+                cpu_texts = [tx for tx in cpu_texts]
+
+            t, l = self.converter.encode(cpu_texts)
+            utils.loadData(text, t)
+            utils.loadData(length, l)
+
+            if self.use_gpu:
+                image = image.cuda()
+
+            preds = self.model(image)
+            preds_size = Variable(torch.IntTensor([preds.size(0)] * batch_size))
+            loss = self.criterion(preds, text, preds_size, length)
+            test_loss += loss.item()
+
+            _, preds = preds.max(2)
+            # preds = preds.squeeze(2)
+            preds = preds.transpose(1, 0).contiguous().view(-1)
+            sim_preds = self.converter.decode(preds.data, preds_size.data, raw=False)
+
+            for pred, target in zip(sim_preds, cpu_texts):
+                if pred.strip() == target.strip():
+                    correct += 1
+
+        accuracy = correct / float(len(self.test_loader_200.dataset) +
+                                   len(self.test_loader_300.dataset) +
+                                   len(self.test_loader_400.dataset))
+        temp_loss = test_loss / (len(self.test_loader_200) +
+                                 len(self.test_loader_300) +
+                                 len(self.test_loader_400))
+        print('[Test] loss: %f, accuray: %f' % (temp_loss, accuracy))
+
+        # =================================================================================
+        for data, target in self.test_loader_600:
             cpu_images = data
             cpu_texts = target
             batch_size = cpu_images.size(0)
@@ -449,9 +550,18 @@ class ModuleTrain:
 
         # =================================================================================
         time_end = time.time()
-        time_avg = float(time_end - time_start) / float(len(self.test_loader_1.dataset) + len(self.test_loader_3.dataset) + len(self.test_loader_5.dataset))
-        accuracy = correct / float(len(self.test_loader_1.dataset) + len(self.test_loader_3.dataset) + len(self.test_loader_5.dataset))
-        test_loss /= (len(self.test_loader_1) + len(self.test_loader_3) + len(self.test_loader_5))
+        time_avg = float(time_end - time_start) / float(len(self.test_loader_200.dataset) +
+                                                        len(self.test_loader_300.dataset) +
+                                                        len(self.test_loader_400.dataset) +
+                                                        len(self.test_loader_600.dataset))
+        accuracy = correct / float(len(self.test_loader_200.dataset) +
+                                   len(self.test_loader_300.dataset) +
+                                   len(self.test_loader_400.dataset) +
+                                   len(self.test_loader_600.dataset))
+        test_loss /= (len(self.test_loader_200) +
+                      len(self.test_loader_300) +
+                      len(self.test_loader_400) +
+                      len(self.test_loader_600))
         print('[Test] loss: %f, accuray: %f, time: %f' % (test_loss, accuracy, time_avg))
         return test_loss, accuracy
 
