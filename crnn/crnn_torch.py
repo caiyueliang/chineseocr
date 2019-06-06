@@ -51,45 +51,73 @@ transform = T.Compose([
 ])
 
 
+# def crnnOcr(image):
+#     """
+#     crnn模型，ocr识别
+#     image:PIL.Image.convert("L")
+#     """
+#     # print(image.size)
+#     scale = image.size[1] * 1.0 / 32
+#     w = image.size[0] / scale
+#     w = int(w)
+#
+#     # image = image.resize((w, 32), resample=Image.HAMMING)
+#     image_cv = cv2.cvtColor(np.asarray(image), cv2.COLOR_RGB2BGR)
+#     print(image_cv.shape)
+#     image_cv = cv2.resize(image_cv, (w, 32))
+#     cv2.imshow("crnnOcr", image_cv)
+#     image = Image.fromarray(cv2.cvtColor(image_cv, cv2.COLOR_BGR2RGB))
+#
+#     image = transform(image)
+#
+#     if torch.cuda.is_available() and GPU:
+#         image = image.cuda()
+#     else:
+#         image = image.cpu()
+#
+#     print(image.size())
+#     image = image.view(1, *image.size())
+#     print(image.size())
+#     image = Variable(image)
+#     preds = model(image)
+#     _, preds = preds.max(2)
+#     preds = preds.transpose(1, 0).contiguous().view(-1)
+#     sim_pred = converter.decode(preds)
+#     print('sim_pred', sim_pred)
+#
+#     cv2.waitKey(0)
+#     return sim_pred
+
+
 def crnnOcr(image):
     """
     crnn模型，ocr识别
     image:PIL.Image.convert("L")
     """
-    # print(image.size)
     scale = image.size[1] * 1.0 / 32
     w = image.size[0] / scale
     w = int(w)
+    transformer = resizeNormalize((w, 32))
+    image = transformer(image)
+    image = image.astype(np.float32)
+    image = torch.from_numpy(image)
 
-    # image = image.resize((w, 32), resample=Image.HAMMING)
-    image_cv = cv2.cvtColor(np.asarray(image), cv2.COLOR_RGB2BGR)
-    print(image_cv.shape)
-    image_cv = cv2.resize(image_cv, (w, 32))
+    image_cv = cv2.cvtColor(np.asarray(image), cv2.COLOR_GRAY2RGB)
     cv2.imshow("crnnOcr", image_cv)
-    image = Image.fromarray(cv2.cvtColor(image_cv, cv2.COLOR_BGR2RGB))
-
-    image = transform(image)
-    # image = resizeNormalize((w, 32))
-    # image = transformer(image)
-    # image = image.astype(np.float32)
-    # image = torch.from_numpy(image)
 
     if torch.cuda.is_available() and GPU:
         image = image.cuda()
     else:
         image = image.cpu()
 
+    image = image.view(1, 1, *image.size())
     print(image.size())
-    image = image.view(1, *image.size())
-    print(image.size())
+
     image = Variable(image)
     preds = model(image)
     _, preds = preds.max(2)
     preds = preds.transpose(1, 0).contiguous().view(-1)
     sim_pred = converter.decode(preds)
-    print('sim_pred', sim_pred)
 
     cv2.waitKey(0)
     return sim_pred
-       
-
