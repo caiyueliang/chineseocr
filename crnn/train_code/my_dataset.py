@@ -58,7 +58,7 @@ class MyDataset(Dataset):
         # cv2.imshow("old", img_1)
 
         if self.is_train is True:
-            # img = self.random_gaussian(img)
+            img = self.random_gaussian(img)
             # img = self.random_bright(img)
             img = self.random_crop(img)
 
@@ -80,7 +80,7 @@ class MyDataset(Dataset):
 
         k = random.random()
         if k > 0.5:
-            img = img.filter(ImageFilter.GaussianBlur(radius=1.2))
+            img = img.filter(ImageFilter.GaussianBlur(radius=1.1))
             # img = cv2.GaussianBlur(img, ksize=(k, k), sigmaX=1.5)
 
         # img_2 = cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
@@ -89,12 +89,12 @@ class MyDataset(Dataset):
         return img
 
     # 随机裁剪(PIL)
-    def random_crop(self, img, max_n=5):
+    def random_crop(self, img, max_n=4):
         imw, imh = img.size
         # img_1 = cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
         # cv2.imshow("old", img_1)
 
-        top = random.randint(0, max_n*2)
+        top = random.randint(0, max_n)
         bottom = random.randint(0, max_n)
         left = random.randint(0, max_n)
         right = random.randint(0, 2)
