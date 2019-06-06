@@ -106,10 +106,11 @@ def crnnOcr(image):
     # image = image.astype(np.float32)
     # image = torch.from_numpy(image)
     image = image.resize((w, 32), Image.BILINEAR)
-    image = transform(image)
 
-    # image_cv = cv2.cvtColor(np.asarray(image), cv2.COLOR_GRAY2RGB)
-    # cv2.imshow("crnnOcr", image_cv)
+    image_cv = cv2.cvtColor(np.asarray(image), cv2.COLOR_GRAY2RGB)
+    cv2.imshow("crnnOcr", image_cv)
+
+    image = transform(image)
 
     if torch.cuda.is_available() and GPU:
         image = image.cuda()
