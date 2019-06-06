@@ -35,6 +35,7 @@ print("Text detect engine:{}".format(opencvFlag))
 import copy
 import cv2
 import numpy
+import glob
 
 
 # 文字检测
@@ -95,7 +96,15 @@ def text_detect(img,
 #             results.append({'cx': cx*f, 'cy': cy*f, 'text': text, 'w': newW*f, 'h': newH*f, 'degree': degree*180.0/np.pi})
 #
 #     return results
-def crnnRec(im, boxes, leftAdjust=False, rightAdjust=False, alph=0.2, f=1.0):
+def save_image(image, text, out_dir='./images_temp/'):
+    if not os.path.exists(out_dir):
+        os.mkdir(out_dir)
+    files = glob.glob(pathname=os.path.join(out_dir, '*.jpg'))
+    filename = str(len(files)) + "_" + text + ".jpg"
+    image.save(os.path.join(out_dir, filename))
+
+
+def crnnRec(im, boxes, leftAdjust=False, rightAdjust=False, alph=0.2, f=1.0, save=True):
     """
     crnn模型，ocr识别
     leftAdjust, rightAdjust 是否左右调整box 边界误差，解决文字漏检
@@ -115,6 +124,9 @@ def crnnRec(im, boxes, leftAdjust=False, rightAdjust=False, alph=0.2, f=1.0):
         # 图片会转灰度图，进行识别
         # print('crnnRec', partImg.size)
         text = crnnOcr(partImg.convert('L'))
+        if save:
+            save_image(partImg, text)
+
         # text = crnnOcr(partImg)
         if text.strip() != u'':
             results.append({'cx': cx * f, 'cy': cy * f, 'text': text, 'w': newW * f, 'h': newH * f, 'degree': degree * 180.0 / np.pi})
