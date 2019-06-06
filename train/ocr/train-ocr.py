@@ -11,19 +11,19 @@ import numpy as np
 from warpctc_pytorch import CTCLoss
 import os
 os.chdir('../../')
-from train.ocr.dataset import PathDataset,randomSequentialSampler,alignCollate
+from train.ocr.dataset import PathDataset, randomSequentialSampler, alignCollate
 from glob import glob
 from sklearn.model_selection import train_test_split
 
 roots = glob('./train/data/ocr/*/*.jpg')
 
-## 训练字符集
+# 训练字符集
 alphabetChinese = '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 
-trainP,testP = train_test_split(roots,test_size=0.1)    ##此处未考虑字符平衡划分
-traindataset = PathDataset(trainP,alphabetChinese)
-testdataset = PathDataset(testP,alphabetChinese)
+trainP,testP = train_test_split(roots, test_size=0.1)    ##此处未考虑字符平衡划分
+traindataset = PathDataset(trainP, alphabetChinese)
+testdataset = PathDataset(testP, alphabetChinese)
 
 batchSize = 32
 workers = 1
