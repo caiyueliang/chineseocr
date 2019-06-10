@@ -104,6 +104,7 @@ if __name__ == '__main__':
     ocr_id_card('./images/2.jpeg')
     ocr_id_card('./images/4.png')
     ocr_id_card('./images/idcard-demo.jpeg')
+    ocr_id_card('./images/1605058866.jpg')
     ocr_id_card('./images/1015929936.jpg')
     ocr_id_card('./images/1316042384.jpg')
     ocr_id_card('./images/webwxgetmsgimg.jpeg')
