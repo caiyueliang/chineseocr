@@ -59,7 +59,7 @@ class MyDataset(Dataset):
 
         if self.is_train is True:
             img = self.random_gaussian(img)
-            # img = self.random_bright(img)
+            img = self.random_bright(img)
             img = self.random_crop(img)
 
         if self.transform is not None:
@@ -80,7 +80,7 @@ class MyDataset(Dataset):
 
         k = random.random()
         if k > 0.5:
-            img = img.filter(ImageFilter.GaussianBlur(radius=1.1))
+            img = img.filter(ImageFilter.GaussianBlur(radius=1.3))
             # img = cv2.GaussianBlur(img, ksize=(k, k), sigmaX=1.5)
 
         # img_2 = cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
@@ -118,10 +118,16 @@ class MyDataset(Dataset):
     def random_bright(self, im, delta=16):
         alpha = random.random()
         if alpha > 0.6:
-            im = cv2.cvtColor(np.asarray(im), cv2.COLOR_RGB2BGR)
+            if self.nc == 1:  # 通道数为1，图片转灰度图
+                im = cv2.cvtColor(np.asarray(im), cv2.COLOR_GRAY2BGR)
+            else:
+                im = cv2.cvtColor(np.asarray(im), cv2.COLOR_RGB2BGR)
             im = im * alpha + random.randrange(-delta, delta)
             im = im.clip(min=0, max=255).astype(np.uint8)
-            im = Image.fromarray(cv2.cvtColor(im, cv2.COLOR_BGR2RGB))
+            if self.nc == 1:  # 通道数为1，图片转灰度图
+                im = Image.fromarray(cv2.cvtColor(im, cv2.COLOR_BGR2GRAY))
+            else:
+                im = Image.fromarray(cv2.cvtColor(im, cv2.COLOR_BGR2RGB))
         return im
 
     # # opencv
