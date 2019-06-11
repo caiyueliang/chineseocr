@@ -4,12 +4,14 @@
 import os
 import random
 import torch
+import base64
 from torch.utils.data import Dataset
 from torch.utils.data import sampler
 import torchvision.transforms as transforms
 from PIL import Image, ImageFilter
 import numpy as np
 import cv2
+from io import BytesIO
 
 
 class MyDataset(Dataset):
@@ -50,6 +52,8 @@ class MyDataset(Dataset):
         # print("image_path", image_path)
         # print("label", label)
         img = Image.open(image_path)
+        # if self.is_train is True:
+        img = self.random_base64(img)               # 随机转换成base64再转回来
 
         if self.nc == 1:                            # 通道数为1，图片转灰度图
             img = img.convert('L')                  # 转灰度图
@@ -73,6 +77,39 @@ class MyDataset(Dataset):
         # print(label)
         return (img, label)
 
+    # ============================================================================================
+    def pil_base64(self, image):
+        img_buffer = BytesIO()
+        image.save(img_buffer, format='jpg')
+        byte_data = img_buffer.getvalue()
+        base64_str = base64.b64encode(byte_data)
+        return base64_str
+
+    def base64_pil(self, base64_str):
+        image = base64.b64decode(base64_str)
+        image = BytesIO(image)
+        image = Image.open(image)
+        return image
+
+    def cv2_to_base64(self, image):
+        base64_str = cv2.imencode('.jpg', image)[1].tostring()
+        base64_str = base64.b64encode(base64_str)
+        return base64_str
+
+    def base64_to_cv2(self, base64_str):
+        imgString = base64.b64decode(base64_str)
+        nparr = np.fromstring(imgString, np.uint8)
+        image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+        return image
+
+    def random_base64(self, image):
+        k = random.random()
+        if k > 0.5:
+            image_base64 = self.pil_base64(image)
+            image = self.base64_pil(image_base64)
+        return image
+
+    # ============================================================================================
     # 随机高斯模糊(PIL)
     def random_gaussian(self, img, max_n=2):
         # img_1 = cv2.cvtColor(np.asarray(img), cv2.COLOR_RGB2BGR)
