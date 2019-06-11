@@ -380,10 +380,9 @@ def xy_rotate_box(cx,cy,w,h,angle):
 
 def rotate_cut_img(im, degree, box, w, h, leftAdjust=False, rightAdjust=False, alph=0.2):
     x1, y1, x2, y2, x3, y3, x4, y4 = box[:8]
-    print('rotate_cut_img', x1, y1, x2, y2, x3, y3, x4, y4)
+    # print('rotate_cut_img', x1, y1, x2, y2, x3, y3, x4, y4)
 
     x_center, y_center = np.mean([x1, x2, x3, x4]), np.mean([y1, y2, y3, y4])
-    degree_ = degree * 180.0 / np.pi
     right = 0
     left = 0
     if rightAdjust:
@@ -391,16 +390,26 @@ def rotate_cut_img(im, degree, box, w, h, leftAdjust=False, rightAdjust=False, a
     if leftAdjust:
         left = 1
 
+    # print(im.shape)
     box = (max(1, x_center - w / 2 - left * alph * (w / 2)),  # xmin
            y_center - h / 2,  # ymin
-           min(x_center + w / 2 + right * alph * (w / 2), im.size[0] - 1),  # xmax
+           min(x_center + w / 2 + right * alph * (w / 2), im.shape[1] - 1),  # xmax
            y_center + h / 2)  # ymax
-    print('box', box)
+    # print('box', box)
 
-    newW = box[2] - box[0]
-    newH = box[3] - box[1]
-    # tmpImg = im.rotate(degree_, center=(x_center, y_center)).crop(box)
-    tmpImg = im.crop(box)
+    newW = int(box[2] - box[0])
+    newH = int(box[3] - box[1])
+
+    # =====================================================
+    # remap_points = np.array([[0, 0], [164, 0], [164, 48], [0, 48]], dtype=np.float32)
+    remap_points = np.array([[0, 0], [newW, 0], [newW, newH], [0, newH]], dtype=np.float32)
+    old_points = np.array([[x1, y1], [x2, y2], [x3, y3], [x4, y4]], dtype=np.float32)
+    # 透视变换：用到opencv函数
+    M = cv2.getPerspectiveTransform(old_points, remap_points)
+    tmpImg = cv2.warpPerspective(im, M, (newW, newH))
+    # cv2.imshow('rotate_cut_img', tmpImg)
+    # cv2.waitKey(0)
+
     return tmpImg, newW, newH
 
 
