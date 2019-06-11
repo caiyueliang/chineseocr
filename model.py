@@ -111,7 +111,7 @@ def crnnRec(im, boxes, leftAdjust=False, rightAdjust=False, alph=0.2, f=1.0, sav
     """
     results = []
     # im = Image.fromarray(im)
-    # im = Image.fromarray(cv2.cvtColor(im, cv2.COLOR_BGR2RGB))
+    im = Image.fromarray(cv2.cvtColor(im, cv2.COLOR_BGR2RGB))
 
     for index, box in enumerate(boxes):
         degree, w, h, cx, cy = solve(box)
@@ -119,9 +119,9 @@ def crnnRec(im, boxes, leftAdjust=False, rightAdjust=False, alph=0.2, f=1.0, sav
         # 按照box大小，裁剪图片
         partImg, newW, newH = rotate_cut_img(im, degree, box, w, h, leftAdjust, rightAdjust, alph)
         # partImg, newW, newH = cut_img = ()
-        # image_cv = cv2.cvtColor(numpy.asarray(partImg), cv2.COLOR_RGB2BGR)
-        cv2.imshow("crnnRec", partImg)
-        partImg = Image.fromarray(cv2.cvtColor(partImg, cv2.COLOR_BGR2RGB))
+        image_cv = cv2.cvtColor(numpy.asarray(partImg), cv2.COLOR_RGB2BGR)
+        cv2.imshow("crnnRec", image_cv)
+        # partImg = Image.fromarray(cv2.cvtColor(partImg, cv2.COLOR_BGR2RGB))
 
         # 图片会转灰度图，进行识别
         # print('crnnRec', partImg.size)
