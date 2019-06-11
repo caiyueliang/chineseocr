@@ -63,7 +63,7 @@ class MyDataset(Dataset):
 
         if self.is_train is True:
             img = self.random_gaussian(img)
-            img = self.random_bright(img)
+            # img = self.random_bright(img)
             img = self.random_crop(img)
 
         if self.transform is not None:
@@ -80,7 +80,7 @@ class MyDataset(Dataset):
     # ============================================================================================
     def pil_base64(self, image):
         img_buffer = BytesIO()
-        image.save(img_buffer, format='jpg')
+        image.save(img_buffer, format='jpeg')
         byte_data = img_buffer.getvalue()
         base64_str = base64.b64encode(byte_data)
         return base64_str
