@@ -106,7 +106,7 @@ def crnnOcr(image):
     # image = transformer(image)
     # image = image.astype(np.float32)
     # image = torch.from_numpy(image)
-    image = image.resize((w, 32), Image.BILINEAR)
+    image = image.resize((w, 32), Image.HAMMING)
 
     image_cv = cv2.cvtColor(np.asarray(image), cv2.COLOR_GRAY2RGB)
     cv2.imshow("crnnOcr", image_cv)

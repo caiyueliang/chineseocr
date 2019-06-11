@@ -100,8 +100,9 @@ def ocr_train_ticket(path, detect_angle=False):
 
 
 if __name__ == '__main__':
-    ocr_id_card('./images/1.jpeg')
-    ocr_id_card('./images/2.jpeg')
+    ocr_id_card('./images/51239126.jpg')
+    ocr_id_card('./images/1115990999.jpg')
+    ocr_id_card('./images/1407677524.jpg')
     ocr_id_card('./images/4.png')
     ocr_id_card('./images/idcard-demo.jpeg')
     ocr_id_card('./images/1605058866.jpg')

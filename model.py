@@ -118,6 +118,7 @@ def crnnRec(im, boxes, leftAdjust=False, rightAdjust=False, alph=0.2, f=1.0, sav
 
         # 按照box大小，裁剪图片
         partImg, newW, newH = rotate_cut_img(im, degree, box, w, h, leftAdjust, rightAdjust, alph)
+        # partImg, newW, newH = cut_img = ()
         image_cv = cv2.cvtColor(numpy.asarray(partImg), cv2.COLOR_RGB2BGR)
         cv2.imshow("crnnRec", image_cv)
 
