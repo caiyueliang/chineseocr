@@ -125,10 +125,11 @@ if __name__ == '__main__':
     #
     ocr_id_card('/home/lijc08/1.jpeg')
     ocr_id_card('/home/lijc08/2.jpg')
-    ocr_id_card('/home/lijc08/3.jpg')
-    ocr_id_card('/home/lijc08/4.jpg')
+    # ocr_id_card('/home/lijc08/3.jpg')
+    # ocr_id_card('/home/lijc08/4.jpg')
     ocr_id_card('/home/lijc08/5.jpg')
-    ocr_id_card('/home/lijc08/6.jpg')
+    # ocr_id_card('/home/lijc08/6.jpg')
+    ocr_id_card('/home/lijc08/7.jpg')
 
 
 

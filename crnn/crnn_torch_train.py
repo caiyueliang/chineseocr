@@ -2,7 +2,7 @@
 from __future__ import print_function
 import os
 import argparse
-from keys import alphabetChinese_3564
+from keys import alphabetChinese_7063
 import network_torch as crnn
 from train_code import model_train_new as new_mt
 from train_code import model_train_more as more_mt
@@ -10,9 +10,9 @@ from train_code import model_train_more as more_mt
 
 def parse_argvs():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--train_mode', type=int, help='mode', default=1)
-    parser.add_argument('--train_root', help='path to dataset', default='../../Data/OCR_3500/train')
-    parser.add_argument('--val_root', help='path to dataset', default='../../Data/OCR_3500/test')
+    parser.add_argument('--train_mode', type=int, help='mode', default=0)
+    parser.add_argument('--train_root', help='path to dataset', default='../../Data/OCR_7000_2/train')
+    parser.add_argument('--val_root', help='path to dataset', default='../../Data/OCR_7000_2/test')
     parser.add_argument('--model', help='model to train', default='CRNN')
 
     parser.add_argument('--workers', type=int, help='number of data loading workers', default=1)
@@ -20,8 +20,8 @@ def parse_argvs():
     # parser.add_argument('--imgH', type=int, default=32, help='the height of the input image to network')
     # parser.add_argument('--imgW', type=int, default=256, help='the width of the input image to network')
     parser.add_argument('--img_h', type=int, default=32, help='the height of the input image to network')
-    # parser.add_argument('--img_w', type=int, default=58, help='the width of the input image to network')
-    parser.add_argument('--img_w', type=int, default=300, help='the width of the input image to network')
+    parser.add_argument('--img_w', type=int, default=58, help='the width of the input image to network')
+    # parser.add_argument('--img_w', type=int, default=300, help='the width of the input image to network')
     parser.add_argument('--nh', type=int, default=256, help='size of the lstm hidden state')
     parser.add_argument('--niter', type=int, default=100, help='number of epochs to train for')
     parser.add_argument('--lr', type=float, default=0.0001, help='learning rate for Critic, default=0.001')
@@ -32,12 +32,12 @@ def parse_argvs():
     # parser.add_argument('--n_channels', type=int, default=1, help='image channels')
 
     parser.add_argument('--fine_tuning', type=bool, default=False, help='fine_tuning')
-    parser.add_argument('--old_class_num', type=int, default=3564, help='input batch size')
-    parser.add_argument('--new_class_num', type=int, default=3564, help='input batch size')
+    parser.add_argument('--old_class_num', type=int, default=7063, help='input batch size')
+    parser.add_argument('--new_class_num', type=int, default=7063, help='input batch size')
 
     # parser.add_argument('--crnn', help="path to crnn (to continue training)", default='./save_model/netCRNN.pth')
     # parser.add_argument('--crnn', help="path to crnn (to continue training)", default='')
-    parser.add_argument('--alphabet', default=alphabetChinese_3564)
+    parser.add_argument('--alphabet', default=alphabetChinese_7063)
     parser.add_argument('--out_put', help='Where to store samples and models', default='./checkpoints')
     parser.add_argument('--use_unicode', type=bool, help='use_unicode', default=True)
     parser.add_argument('--displayInterval', type=int, default=100, help='Interval to be displayed')
