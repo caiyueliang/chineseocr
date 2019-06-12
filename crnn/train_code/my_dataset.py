@@ -110,14 +110,14 @@ class MyDataset(Dataset):
         return image
 
     def get_image(self, image_path):
-        # img = Image.open(image_path)                                  # PIL格式
+        img = Image.open(image_path)                                  # PIL格式
 
-        # 二进制方式打开图文件
-        f = open(image_path, 'rb')
-        # 参数image：图像base64编码
-        img_base64 = base64.b64encode(f.read())                         # 转base64格式
-        img = self.base64_to_cv2(img_base64)                            # 转opencv格式
-        img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))     # 转PIL格式
+        # # 二进制方式打开图文件
+        # f = open(image_path, 'rb')
+        # # 参数image：图像base64编码
+        # img_base64 = base64.b64encode(f.read())                         # 转base64格式
+        # img = self.base64_to_cv2(img_base64)                            # 转opencv格式
+        # img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))     # 转PIL格式
         return img
 
     # ============================================================================================
