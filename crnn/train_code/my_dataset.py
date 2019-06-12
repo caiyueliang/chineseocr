@@ -51,9 +51,9 @@ class MyDataset(Dataset):
 
         # print("image_path", image_path)
         # print("label", label)
-        img = Image.open(image_path)
-        # if self.is_train is True:
-        img = self.random_base64(img)               # 随机转换成base64再转回来
+
+        # img = Image.open(image_path)
+        img = self.get_image(image_path)
 
         if self.nc == 1:                            # 通道数为1，图片转灰度图
             img = img.convert('L')                  # 转灰度图
@@ -78,14 +78,14 @@ class MyDataset(Dataset):
         return (img, label)
 
     # ============================================================================================
-    def pil_base64(self, image):
+    def pil_to_base64(self, image):
         img_buffer = BytesIO()
         image.save(img_buffer, format='jpeg')
         byte_data = img_buffer.getvalue()
         base64_str = base64.b64encode(byte_data)
         return base64_str
 
-    def base64_pil(self, base64_str):
+    def base64_to_pil(self, base64_str):
         image = base64.b64decode(base64_str)
         image = BytesIO(image)
         image = Image.open(image)
@@ -102,12 +102,23 @@ class MyDataset(Dataset):
         image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         return image
 
-    def random_base64(self, image):
+    def random_base64(self, image, p=0):
         k = random.random()
-        if k > 0.5:
+        if k >= p:
             image_base64 = self.pil_base64(image)
             image = self.base64_pil(image_base64)
         return image
+
+    def get_image(self, image_path):
+        # img = Image.open(image_path)                                  # PIL格式
+
+        # 二进制方式打开图文件
+        f = open(image_path, 'rb')
+        # 参数image：图像base64编码
+        img_base64 = base64.b64encode(f.read())                         # 转base64格式
+        img = self.base64_to_cv2(img_base64)                            # 转opencv格式
+        img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))     # 转PIL格式
+        return img
 
     # ============================================================================================
     # 随机高斯模糊(PIL)
