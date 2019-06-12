@@ -1,16 +1,38 @@
 # -*- coding: utf-8 -*-
 import cv2
 import time
+import numpy as np
 from PIL import Image
 import model
+import base64
 
 from application import idcard
 from application import trainTicket
 
 
+def base64_to_cv2(base64_str):
+    imgString = base64.b64decode(base64_str)
+    nparr = np.fromstring(imgString, np.uint8)
+    image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+    return image
+
+
+def get_image(image_path):
+    # img = Image.open(image_path)                                  # PIL格式
+
+    # 二进制方式打开图文件
+    f = open(image_path, 'rb')
+    # 参数image：图像base64编码
+    img_base64 = base64.b64encode(f.read())     # 转base64格式
+    img = base64_to_cv2(img_base64)             # 转opencv格式
+    # img = Image.fromarray(cv2.cvtColor(img, cv2.COLOR_BGR2RGB))  # 转PIL格式
+    return img
+
+
 # 身份证识别
 def ocr_id_card(path, detect_angle=False):
-    img = cv2.imread(path)  # GBR
+    # img = cv2.imread(path)    # GBR
+    img = get_image(path)       # GBR
     H, W = img.shape[:2]
 
     time_take = time.time()
@@ -101,11 +123,12 @@ def ocr_train_ticket(path, detect_angle=False):
 
 if __name__ == '__main__':
     #
-    ocr_id_card('./images/81611454.jpg')
-    ocr_id_card('./images/1115990999.jpg')
-    ocr_id_card('./images/1407677524.jpg')
-    ocr_id_card('./images/1.jpeg')
-    ocr_id_card('./images/2.jpeg')
-    ocr_id_card('./images/4.png')
-    ocr_id_card('./images/idcard-demo.jpeg')
+    ocr_id_card('/home/lijc08/1.jpeg')
+    ocr_id_card('/home/lijc08/2.jpg')
+    ocr_id_card('/home/lijc08/3.jpg')
+    ocr_id_card('/home/lijc08/4.jpg')
+    ocr_id_card('/home/lijc08/5.jpg')
+    ocr_id_card('/home/lijc08/6.jpg')
+
+
 
