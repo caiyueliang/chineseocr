@@ -105,8 +105,8 @@ class MyDataset(Dataset):
     def random_base64(self, image, p=0):
         k = random.random()
         if k >= p:
-            image_base64 = self.pil_base64(image)
-            image = self.base64_pil(image_base64)
+            image_base64 = self.pil_to_base64(image)
+            image = self.base64_to_pil(image_base64)
         return image
 
     def get_image(self, image_path):
